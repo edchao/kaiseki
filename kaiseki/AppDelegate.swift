@@ -7,15 +7,49 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var navC: UINavigationController?
+    var homeVC: HomeViewController?
+
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // FIREBASE
+        
+        FIRApp.configure()
+        FIRAuth.auth()?.signIn(withEmail: "aaa@aaa.com", password: "aaaaaa", completion: { (user:FIRUser?, error:Error?) in
+            if error == nil {
+                print(user?.email ?? "This is the user email")
+            }else{
+                print(error?.localizedDescription ?? "this is the error localized description")
+            }
+        })
+        
+        
+        // NAVIGATION STACk
+        
+        navC = UINavigationController()
+        homeVC = HomeViewController()
+        navC!.pushViewController(homeVC!, animated: false)
+        
+        
+        // WINDOW
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        if let window = window {
+            window.backgroundColor = UIColor.white
+            window.rootViewController = navC
+            window.makeKeyAndVisible()
+            window.layer.cornerRadius = 4.0
+            window.layer.masksToBounds = true
+            window.layer.isOpaque = false
+        }
         return true
     }
 
