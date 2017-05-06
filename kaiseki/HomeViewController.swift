@@ -10,25 +10,24 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 
+
 class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSource {
     
     // BUTTONS
     
-    let btn1 = UIButton()
-    let btn2 = UIButton()
+    let btnThread = UIButton()
+    
+    
+    // FIREBASE DECLARATIONS
+    
+    var threadsRef: FIRDatabaseReference!
+    var threads = [Thread]()
+    
     
     // CAROUSEL DECLARATIONS
     
     var carousel = iCarousel()
     var numbers = [Int]()
-    
-    
-    // FIREBASE DECLARATIONS
-    
-    var postsRef:FIRDatabaseReference!
-    var threadsRef: FIRDatabaseReference!
-    var posts = [Post]()
-    var threads = [Thread]()
     
     
 
@@ -40,7 +39,6 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         // SET FIREBASE DATA REF
         
-        postsRef = FIRDatabase.database().reference().child("post-items")
         threadsRef = FIRDatabase.database().reference().child("thread-items")
         startObservingDB()
         
@@ -61,17 +59,12 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         // INITIALIZE BUTTON
         
-        btn1.frame = CGRect(x:20, y:50, width:80, height:30)
-        btn1.setTitleColor(UIColor.black, for: UIControlState.normal)
-        btn1.setTitle("Post", for: UIControlState.normal)
-        btn1.addTarget(self, action: #selector(self.composePost), for: .touchUpInside)
-        self.navigationItem.setRightBarButton(UIBarButtonItem(customView: btn1), animated: true);
-        
-        btn2.frame = CGRect(x:100, y:50, width:80, height:30)
-        btn2.setTitleColor(UIColor.black, for: UIControlState.normal)
-        btn2.setTitle("Thread", for: UIControlState.normal)
-        btn2.addTarget(self, action: #selector(self.createThread), for: .touchUpInside)
-        self.navigationItem.setLeftBarButton(UIBarButtonItem(customView: btn2), animated: true);
+ 
+        btnThread.frame = CGRect(x:100, y:50, width:80, height:30)
+        btnThread.setTitleColor(UIColor.black, for: UIControlState.normal)
+        btnThread.setTitle("Thread", for: UIControlState.normal)
+        btnThread.addTarget(self, action: #selector(self.createThread), for: .touchUpInside)
+        self.navigationItem.setRightBarButton(UIBarButtonItem(customView: btnThread), animated: true);
         
 
     }
@@ -82,15 +75,15 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     
     func startObservingDB() {
         
-        postsRef.observe(FIRDataEventType.value, with: { (snapshot: FIRDataSnapshot) in
-            var newPosts = [Post]()
+        threadsRef.observe(FIRDataEventType.value, with: { (snapshot: FIRDataSnapshot) in
+            var newThreads = [Thread]()
             
-            for post in snapshot.children {
-                let postObject = Post(snapshot: post as! FIRDataSnapshot)
-                newPosts.append(postObject)
+            for thread in snapshot.children {
+                let threadObject = Thread(snapshot: thread as! FIRDataSnapshot)
+                newThreads.append(threadObject)
             }
             
-            self.posts = newPosts
+            self.threads = newThreads
             self.carousel.reloadData()
             
         }) { (error: Error) in
@@ -99,27 +92,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
     }
     
-    // POST BUTTON
-    
-    func composePost(sender:AnyObject){
-        print("Trying to Post")
-        
-        let postAlert = UIAlertController(title: "Your post", message: "Enter your post", preferredStyle: .alert)
-        postAlert.addTextField { (textField:UITextField) in
-            textField.placeholder = "Your post"
-        }
-        
-        postAlert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action:UIAlertAction) in
-            if let postContent = postAlert.textFields?.first?.text{
-                let post = Post(content: postContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!)
-                let postRef = self.postsRef.child(postContent.lowercased())
-                postRef.setValue(post.toAny())
-            }
-        }))
-        
-        
-        self.present(postAlert, animated: true, completion:nil)
-    }
+
 
     
     // THREAD BUTTON
@@ -135,7 +108,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         threadAlert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action:UIAlertAction) in
             if let threadContent = threadAlert.textFields?.first?.text{
                 let thread = Thread(content: threadContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!)
-                let threadRef = self.threadsRef.child(threadContent.lowercased())
+                let threadRef = self.threadsRef.childByAutoId()
                 threadRef.setValue(thread.toAny())
             }
         }))
@@ -149,20 +122,20 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     // CAROUSEL FUNCTIONS
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        return posts.count
+        return threads.count
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         let tempView = CoverView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         
-        let post = posts[index]
+        let thread = threads[index]
         
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         button.backgroundColor = UIColor.clear
         button.tag = index
         button.addTarget(self, action: #selector(self.goToThread), for: .touchUpInside)
         tempView.addSubview(button)
-        tempView.titleLabel.text = post.content
+        tempView.titleLabel.text = thread.content
         return tempView
     }
     
@@ -183,10 +156,12 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     {
         print("Thread tapped")
         let vc = ThreadViewController()
-        vc.title = posts[sender.tag].content
+        vc.title = threads[sender.tag].content
+        vc.threadKey = threads[sender.tag].key
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+
 
     
     override func didReceiveMemoryWarning() {

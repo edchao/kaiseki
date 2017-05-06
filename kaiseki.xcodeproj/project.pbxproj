@@ -10,6 +10,8 @@
 		0A029FF2F1E867912AD71618 /* Pods_kaisekiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A87A8495F841D5C00ED96C2 /* Pods_kaisekiUITests.framework */; };
 		8782D0C1AC4B761ECA7868EE /* Pods_kaiseki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4B2A31A1BEC13491C11F74 /* Pods_kaiseki.framework */; };
 		BFBFAF2ED934A980505D26FE /* Pods_kaisekiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 549E8ED6A44BA7C7F1FFD95B /* Pods_kaisekiTests.framework */; };
+		F300C1A71EAC44AB00D58005 /* ThreadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300C1A51EAC44AB00D58005 /* ThreadTableViewCell.swift */; };
+		F300C1A81EAC44AB00D58005 /* ThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F300C1A61EAC44AB00D58005 /* ThreadTableViewCell.xib */; };
 		F31AA7CE1EA434C9005DB6EE /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31AA7CD1EA434C9005DB6EE /* Thread.swift */; };
 		F31AA7D01EA45AD9005DB6EE /* ThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31AA7CF1EA45AD9005DB6EE /* ThreadViewController.swift */; };
 		F341B0DC1E9047A8007AB0BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F341B0DB1E9047A8007AB0BF /* AppDelegate.swift */; };
@@ -53,6 +55,8 @@
 		C9E4DA5DA6ACCBC5A5165625 /* Pods-kaiseki.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kaiseki.debug.xcconfig"; path = "Pods/Target Support Files/Pods-kaiseki/Pods-kaiseki.debug.xcconfig"; sourceTree = "<group>"; };
 		CB4B2A31A1BEC13491C11F74 /* Pods_kaiseki.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kaiseki.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A51CAAB3C21733927D351A /* Pods-kaiseki.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kaiseki.release.xcconfig"; path = "Pods/Target Support Files/Pods-kaiseki/Pods-kaiseki.release.xcconfig"; sourceTree = "<group>"; };
+		F300C1A51EAC44AB00D58005 /* ThreadTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadTableViewCell.swift; sourceTree = "<group>"; };
+		F300C1A61EAC44AB00D58005 /* ThreadTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThreadTableViewCell.xib; sourceTree = "<group>"; };
 		F31AA7CD1EA434C9005DB6EE /* Thread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		F31AA7CF1EA45AD9005DB6EE /* ThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadViewController.swift; sourceTree = "<group>"; };
 		F341B0D81E9047A8007AB0BF /* kaiseki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kaiseki.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +132,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F300C1A91EAC44B200D58005 /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F300C1A51EAC44AB00D58005 /* ThreadTableViewCell.swift */,
+				F300C1A61EAC44AB00D58005 /* ThreadTableViewCell.xib */,
+			);
+			name = "Table Cells";
+			sourceTree = "<group>";
+		};
 		F341B0CF1E9047A8007AB0BF = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +170,7 @@
 				F342EDED1EA2C1CB00A6C713 /* Models */,
 				F342EDEA1EA2C1A400A6C713 /* View Controllers */,
 				F342EDF81EA2CA7300A6C713 /* Views */,
+				F300C1A91EAC44B200D58005 /* Table Cells */,
 				F341B0E21E9047A8007AB0BF /* Assets.xcassets */,
 				F341B0E41E9047A8007AB0BF /* LaunchScreen.storyboard */,
 				F342EDE51E9B187E00A6C713 /* iCarousel.h */,
@@ -335,6 +349,7 @@
 				F341B0E61E9047A8007AB0BF /* LaunchScreen.storyboard in Resources */,
 				F341B10A1E9047B1007AB0BF /* GoogleService-Info.plist in Resources */,
 				F341B0E31E9047A8007AB0BF /* Assets.xcassets in Resources */,
+				F300C1A81EAC44AB00D58005 /* ThreadTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +514,7 @@
 			files = (
 				F342EDEC1EA2C1C400A6C713 /* User.swift in Sources */,
 				F342EDE71E9B187E00A6C713 /* iCarousel.m in Sources */,
+				F300C1A71EAC44AB00D58005 /* ThreadTableViewCell.swift in Sources */,
 				F342EDF71EA2CA6D00A6C713 /* CoverView.swift in Sources */,
 				F341B0DC1E9047A8007AB0BF /* AppDelegate.swift in Sources */,
 				F31AA7D01EA45AD9005DB6EE /* ThreadViewController.swift in Sources */,
