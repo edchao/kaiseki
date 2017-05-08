@@ -10,8 +10,28 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 
+extension UIColor {
+    class func ink(alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 32/255, green: 32/255, blue: 32/255, alpha: alpha)
+    }
+    class func coal(alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 44/255, green: 44/255, blue: 44/255, alpha: alpha)
+    }
+}
+
+
 
 class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSource {
+    
+    
+    // VARS
+    
+    let screenSize: CGRect = UIScreen.main.bounds
+    
+    
+    // TITLE LABEL
+    
+    var titleView = TitleView()
     
     // BUTTONS
     
@@ -43,15 +63,22 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         startObservingDB()
         
         
+        // SET VIEW COLOR
+        
+        self.view.backgroundColor = UIColor.ink(alpha: 1.0)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true        
+        
         
         // INITIALIZE CAROUSEL
         
         numbers = [1,2,3,4,5,6]
         
-        carousel = iCarousel(frame: CGRect(x:0, y:0, width:200, height:200))
-        carousel.center = view.center
+        carousel = iCarousel(frame: CGRect(x:40, y:250, width:screenSize.width, height:240))
         carousel.dataSource = self as iCarouselDataSource
         carousel.delegate = self as iCarouselDelegate
+        carousel.contentOffset = CGSize(width: -100.0, height: 0)
         
         
         self.view.addSubview(carousel)
@@ -61,12 +88,17 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
  
         btnThread.frame = CGRect(x:100, y:50, width:80, height:30)
-        btnThread.setTitleColor(UIColor.black, for: UIControlState.normal)
-        btnThread.setTitle("Thread", for: UIControlState.normal)
+        btnThread.setTitleColor(UIColor.white, for: UIControlState.normal)
+        btnThread.setTitle("Add Car", for: UIControlState.normal)
         btnThread.addTarget(self, action: #selector(self.createThread), for: .touchUpInside)
         self.navigationItem.setRightBarButton(UIBarButtonItem(customView: btnThread), animated: true);
         
 
+        // INITIALIZE TITLEVIEW
+        
+        titleView = TitleView(frame: CGRect(x:0, y:120, width:screenSize.width, height:80))
+        titleView.titleLabel.text = "Cars"
+        self.view.addSubview(titleView)
     }
 
     
@@ -100,14 +132,20 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     func createThread(sender:AnyObject){
         print("Trying to Create Thread")
         
-        let threadAlert = UIAlertController(title: "Your thread", message: "Enter your thread name", preferredStyle: .alert)
+        let threadAlert = UIAlertController(title: "Add a Car", message: "Enter your car information", preferredStyle: .alert)
         threadAlert.addTextField { (textField:UITextField) in
-            textField.placeholder = "Your thread name"
+            textField.placeholder = "Year"
+        }
+        threadAlert.addTextField { (textField:UITextField) in
+            textField.placeholder = "Model (e.g. Honda)"
+        }
+        threadAlert.addTextField { (textField:UITextField) in
+            textField.placeholder = "Make (e.g. Civic)"
         }
         
-        threadAlert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action:UIAlertAction) in
-            if let threadContent = threadAlert.textFields?.first?.text{
-                let thread = Thread(content: threadContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!)
+        threadAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action:UIAlertAction) in
+            if let threadPrimaryContent = threadAlert.textFields?[2].text, let threadSecondaryContent = threadAlert.textFields?[0].text, let threadTertiaryContent = threadAlert.textFields?[1].text {
+                let thread = Thread(primaryContent: threadPrimaryContent, secondaryContent: threadSecondaryContent, tertiaryContent: threadTertiaryContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!)
                 let threadRef = self.threadsRef.childByAutoId()
                 threadRef.setValue(thread.toAny())
             }
@@ -126,22 +164,26 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-        let tempView = CoverView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        let tempView = CoverView(frame: CGRect(x: 0, y: 0, width: 180, height: 240))
         
         let thread = threads[index]
+        
+        print(thread)
         
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         button.backgroundColor = UIColor.clear
         button.tag = index
         button.addTarget(self, action: #selector(self.goToThread), for: .touchUpInside)
         tempView.addSubview(button)
-        tempView.titleLabel.text = thread.content
+        tempView.metaLabel.text = thread.secondaryContent + " " + thread.tertiaryContent.uppercased()
+        tempView.titleLabel.text = thread.primaryContent
+
         return tempView
     }
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         if option == iCarouselOption.spacing {
-            return value * 1.2
+            return value * 1.1
         }
         else if option == iCarouselOption.tilt {
             return value * 0.5
@@ -156,7 +198,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     {
         print("Thread tapped")
         let vc = ThreadViewController()
-        vc.title = threads[sender.tag].content
+        vc.title = threads[sender.tag].primaryContent
         vc.threadKey = threads[sender.tag].key
         self.navigationController?.pushViewController(vc, animated: true)
     }

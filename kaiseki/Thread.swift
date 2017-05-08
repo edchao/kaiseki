@@ -14,16 +14,20 @@ struct Thread {
     // DECLARE ATTRIBUTES
     
     let key:String!
-    let content:String!
+    let primaryContent:String!
+    let secondaryContent: String!
+    let tertiaryContent: String!
     let addedByUser:String!
     let itemRef:FIRDatabaseReference?
     
     
     // INITIALIZE THREAD WITH ARBITRARY DATA
     
-    init(content:String, addedByUser:String, key:String = ""){
+    init(primaryContent:String, secondaryContent: String, tertiaryContent: String, addedByUser:String, key:String = ""){
         self.key = key
-        self.content = content
+        self.primaryContent = primaryContent
+        self.secondaryContent = secondaryContent
+        self.tertiaryContent = tertiaryContent
         self.addedByUser = addedByUser
         self.itemRef = nil
     }
@@ -38,10 +42,32 @@ struct Thread {
         
         // Firebase snapshots are in json so we have to convert it to a dictionary to access it
         
-        if let threadDict = snapshot.value as? NSDictionary, let threadContent = threadDict["content"] as? String {
-            content = threadContent
-        }else {
-            content = ""
+//        if let threadDict = snapshot.value as? NSDictionary, let threadPrimaryContent = threadDict["primaryContent"] as? String, let threadSecondaryContent = threadDict["secondaryContent"] as? String, let threadTertiaryContent = threadDict["threadTertiaryContent"] as? String {
+//            primaryContent = threadPrimaryContent
+//            secondaryContent = threadSecondaryContent
+//            tertiaryContent = threadTertiaryContent
+//        }else {
+//            primaryContent = ""
+//            secondaryContent = ""
+//            tertiaryContent = ""
+//        }
+        
+        if let threadDict = snapshot.value as? NSDictionary, let threadPrimaryContent = threadDict["primaryContent"] as? String {
+            primaryContent = threadPrimaryContent
+        }else{
+            primaryContent = ""
+        }
+        
+        if let threadDict = snapshot.value as? NSDictionary, let threadSecondaryContent = threadDict["secondaryContent"] as? String {
+            secondaryContent = threadSecondaryContent
+        }else{
+            secondaryContent = ""
+        }
+        
+        if let threadDict = snapshot.value as? NSDictionary, let threadTertiaryContent = threadDict["tertiaryContent"] as? String {
+            tertiaryContent = threadTertiaryContent
+        }else{
+            tertiaryContent = ""
         }
         
         if let userDict = snapshot.value as? NSDictionary, let threadUser = userDict["addedByUser"] as? String {
@@ -54,6 +80,6 @@ struct Thread {
     // RETURN THE DICTIONARY
     
     func toAny() -> Any {
-        return ["content":content, "addedByUser":addedByUser]
+        return ["primaryContent":primaryContent, "secondaryContent":secondaryContent, "tertiaryContent":tertiaryContent, "addedByUser":addedByUser]
     }
 }
