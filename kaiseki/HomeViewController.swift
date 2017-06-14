@@ -21,7 +21,7 @@ extension UIColor {
 
 
 
-class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSource {
+class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSource, UIViewControllerTransitioningDelegate {
     
     
     // VARS
@@ -29,9 +29,10 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     let screenSize: CGRect = UIScreen.main.bounds
     
     
-    // TITLE LABEL
+    // TITLE and SECTION LABEL
     
     var titleView = TitleView()
+    var sectionView = SectionView()
     
     // BUTTONS
     
@@ -75,7 +76,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         numbers = [1,2,3,4,5,6]
         
-        carousel = iCarousel(frame: CGRect(x:40, y:250, width:screenSize.width, height:240))
+        carousel = iCarousel(frame: CGRect(x:40, y:290, width:screenSize.width, height:240))
         carousel.dataSource = self as iCarouselDataSource
         carousel.delegate = self as iCarouselDelegate
         carousel.contentOffset = CGSize(width: -100.0, height: 0)
@@ -90,7 +91,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         btnThread.frame = CGRect(x:100, y:50, width:80, height:30)
         btnThread.setTitleColor(UIColor.white, for: UIControlState.normal)
         btnThread.setTitle("Add Car", for: UIControlState.normal)
-        btnThread.addTarget(self, action: #selector(self.createThread), for: .touchUpInside)
+        btnThread.addTarget(self, action: #selector(self.newThread), for: .touchUpInside)
         self.navigationItem.setRightBarButton(UIBarButtonItem(customView: btnThread), animated: true);
         
 
@@ -99,6 +100,13 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         titleView = TitleView(frame: CGRect(x:0, y:120, width:screenSize.width, height:80))
         titleView.titleLabel.text = "Cars"
         self.view.addSubview(titleView)
+        
+        // INITIALIZE SECTIONVIEW
+        
+        sectionView = SectionView(frame: CGRect(x:0, y:230, width:screenSize.width, height: 40))
+        sectionView.sectionLabel.text = "My Cars".uppercased()
+        self.view.addSubview(sectionView)
+        
     }
 
     
@@ -129,6 +137,16 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     
     // THREAD BUTTON
     
+    func newThread(sender: AnyObject){
+        let newThreadVC: NewThreadViewController = NewThreadViewController(nibName: nil, bundle: nil)
+        self.definesPresentationContext = true
+        newThreadVC.modalPresentationStyle = UIModalPresentationStyle.custom
+        newThreadVC.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
+        self.present(newThreadVC, animated: false) { () -> Void in
+            //
+        }
+    }
+    
     func createThread(sender:AnyObject){
         print("Trying to Create Thread")
         
@@ -143,6 +161,10 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
             textField.placeholder = "Make (e.g. Civic)"
         }
         
+        threadAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action:UIAlertAction) in
+            //
+        }))
+        
         threadAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action:UIAlertAction) in
             if let threadPrimaryContent = threadAlert.textFields?[2].text, let threadSecondaryContent = threadAlert.textFields?[0].text, let threadTertiaryContent = threadAlert.textFields?[1].text {
                 let thread = Thread(primaryContent: threadPrimaryContent, secondaryContent: threadSecondaryContent, tertiaryContent: threadTertiaryContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!)
@@ -150,6 +172,8 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
                 threadRef.setValue(thread.toAny())
             }
         }))
+        
+        
         
         
         self.present(threadAlert, animated: true, completion:nil)

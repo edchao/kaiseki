@@ -1,31 +1,23 @@
 //
-//  CoverView.swift
+//  SectionView.swift
 //  kaiseki
 //
-//  Created by Ed Chao on 4/15/17.
+//  Created by Ed Chao on 6/13/17.
 //  Copyright © 2017 Ed Chao. All rights reserved.
 //
 
 import UIKit
 
-class CoverView: UIView {
 
+class SectionView: UIView {
+    
     private var view: UIView!
-    @IBOutlet weak var metaLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var boxView: UIView!
+    
+    @IBOutlet weak var sectionLabel: UILabel!
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.layer.cornerRadius = 4
-        self.layer.masksToBounds = true
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 10)
-        self.layer.shadowOpacity = 0.15
-        self.layer.shadowPath = UIBezierPath(rect: bounds).cgPath
-        self.layer.shadowRadius = 4.0
-        
         nibSetup()
     }
     
@@ -53,4 +45,4 @@ class CoverView: UIView {
         return nibView
     }
     
-  }
+}
