@@ -152,7 +152,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         let threadAlert = UIAlertController(title: "Add a Car", message: "Enter your car information", preferredStyle: .alert)
         threadAlert.addTextField { (textField:UITextField) in
-            textField.placeholder = "Year"
+            textField.placeholder = "Year (e.g. 2000)"
         }
         threadAlert.addTextField { (textField:UITextField) in
             textField.placeholder = "Model (e.g. Honda)"
