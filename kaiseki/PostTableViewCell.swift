@@ -1,17 +1,17 @@
 //
-//  ThreadTableViewCell.swift
+//  PostTableViewCell.swift
 //  kaiseki
 //
-//  Created by Ed Chao on 4/22/17.
+//  Created by Ed Chao on 7/1/17.
 //  Copyright © 2017 Ed Chao. All rights reserved.
 //
 
 import UIKit
 
-class ThreadTableViewCell: UITableViewCell {
-
+class PostTableViewCell: UITableViewCell {
+    @IBOutlet weak var mileageLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

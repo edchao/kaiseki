@@ -15,11 +15,20 @@ extension UIColor {
         return UIColor(red: 32/255, green: 32/255, blue: 32/255, alpha: alpha)
     }
     class func coal(alpha: CGFloat = 1.0) -> UIColor {
-        return UIColor(red: 44/255, green: 44/255, blue: 44/255, alpha: alpha)
+        return UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: alpha)
+    }
+    class func mint(_ alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 76/255, green: 198/255, blue: 147/255, alpha: alpha)
     }
 }
 
-
+extension UIFont {
+    
+    class func primaryFont() -> UIFont {
+        return UIFont(name: "SanFranciscoDisplay-Regular", size: 18.0)!
+    }
+    
+}
 
 class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSource, UIViewControllerTransitioningDelegate {
     
@@ -76,10 +85,11 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         numbers = [1,2,3,4,5,6]
         
-        carousel = iCarousel(frame: CGRect(x:40, y:290, width:screenSize.width, height:240))
+        carousel = iCarousel(frame: CGRect(x:0, y:290, width:screenSize.width, height:240))
         carousel.dataSource = self as iCarouselDataSource
         carousel.delegate = self as iCarouselDelegate
-        carousel.contentOffset = CGSize(width: -100.0, height: 0)
+        carousel.contentOffset = CGSize(width: -1 * (screenSize.width/2 - (180/2) - 40
+), height: 0)
         
         
         self.view.addSubview(carousel)
@@ -221,13 +231,19 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     func goToThread(sender:UIButton!)
     {
         print("Thread tapped")
+        
         let vc = ThreadViewController()
+        
+        // PASS DATA
+        vc.dataTitle = threads[sender.tag].primaryContent
+        vc.dataMeta = threads[sender.tag].secondaryContent
         vc.title = threads[sender.tag].primaryContent
         vc.threadKey = threads[sender.tag].key
+        
         self.navigationController?.pushViewController(vc, animated: true)
+        
     }
     
-
 
     
     override func didReceiveMemoryWarning() {

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CarTitleView" customModule="kaiseki" customModuleProvider="target">
+            <connections>
+                <outlet property="metaLabel" destination="V1B-mM-jQz" id="bRO-4w-9OK"/>
+                <outlet property="titleLabel" destination="BaU-v1-JqV" id="gWK-MV-GGo"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="166"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1B-mM-jQz">
+                    <rect key="frame" x="40" y="40" width="295" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="kV3-4o-Q1P"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaU-v1-JqV">
+                    <rect key="frame" x="40" y="76" width="295" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="rfQ-UA-aOf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.12156862745098039" green="0.12156862745098039" blue="0.12156862745098039" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="V1B-mM-jQz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="E2w-L9-Qr3"/>
+                <constraint firstItem="BaU-v1-JqV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="ax6-Pg-7fn"/>
+                <constraint firstItem="BaU-v1-JqV" firstAttribute="top" secondItem="V1B-mM-jQz" secondAttribute="bottom" constant="16" id="fEA-g9-TRV"/>
+                <constraint firstAttribute="bottom" secondItem="BaU-v1-JqV" secondAttribute="bottom" constant="40" id="gJv-qg-o35"/>
+                <constraint firstItem="V1B-mM-jQz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="40" id="m1H-vV-Kg4"/>
+                <constraint firstAttribute="trailing" secondItem="BaU-v1-JqV" secondAttribute="trailing" constant="40" id="scS-qx-TPX"/>
+                <constraint firstAttribute="trailing" secondItem="V1B-mM-jQz" secondAttribute="trailing" constant="40" id="sfL-sX-Slr"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="32.5" y="371"/>
+        </view>
+    </objects>
+</document>

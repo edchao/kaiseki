@@ -1,18 +1,20 @@
 //
-//  SectionView.swift
+//  CarTitleView.swift
 //  kaiseki
 //
-//  Created by Ed Chao on 6/13/17.
+//  Created by Ed Chao on 7/1/17.
 //  Copyright © 2017 Ed Chao. All rights reserved.
 //
 
 import UIKit
 
-class SectionView: UIView {
+class CarTitleView: UIView {
     
     private var view: UIView!
     
-    @IBOutlet weak var sectionLabel: UILabel!
+    @IBOutlet weak var metaLabel: UILabel!
+    
+    @IBOutlet weak var titleLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

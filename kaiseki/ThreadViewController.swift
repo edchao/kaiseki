@@ -13,6 +13,16 @@ import FirebaseAuth
 
 class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // DATA TAGS
+    
+    var dataTitle : String?
+    var dataMeta : String?
+   
+    // TITLE and SECTION LABEL
+    
+    var titleView = CarTitleView()
+    
+    
     // TABLE
     
     var table_thread: UITableView! = UITableView()
@@ -38,6 +48,7 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         
         // SET FIREBASE DATA REF
         
@@ -47,8 +58,9 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         // VIEW COLOR
         
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.ink(alpha: 1.0)
         
+
         
         // INITIALIZE BUTTON
         
@@ -66,20 +78,37 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
         table_thread.estimatedRowHeight = 350
         table_thread.delegate = self
         table_thread.dataSource = self
-        table_thread.register(UINib(nibName: "ThreadTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
-        table_thread.separatorInset = UIEdgeInsetsMake(15, 15, 15, 15)
-        table_thread.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        table_thread.register(UINib(nibName: "PostTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+//        table_thread.separatorColor = UIColor.coal(alpha: 1.0)
+        table_thread.separatorStyle = .none
+        table_thread.contentInset = UIEdgeInsets(top: 166, left: 0, bottom: 0, right: 0)
         table_thread.tableHeaderView = UIView(frame: CGRect(x:0, y:0, width:screenSize.width, height:11))
-        table_thread.backgroundColor = UIColor.clear
+        table_thread.backgroundColor = UIColor.ink(alpha: 1.0)
         self.view.addSubview(table_thread)
         self.table_thread.rowHeight = UITableViewAutomaticDimension
     
 
+        // INITIALIZE TITLEVIEW
+        
+        titleView = CarTitleView(frame: CGRect(x:0, y:-166, width:screenSize.width, height:166))
+//        titleView.titleLabel.text = self.navigationItem.title
+        self.table_thread.addSubview(titleView)
         
     }
 
-    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if dataTitle != nil {
+            self.titleView.titleLabel.text = dataTitle
+        }
+        
+        if dataMeta != nil {
+            self.titleView.metaLabel.text = dataMeta
 
+        }
+    }
+
+    
     
     // READ FROM FIREBASE DATABASE
     
@@ -147,10 +176,11 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let post = posts[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath) as! ThreadTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath) as! PostTableViewCell
         cell.contentLabel.text = post.content
-        
+        cell.contentView.layoutMargins = UIEdgeInsets.zero // HACK to remove native cell padding
+//        cell.backgroundColor = UIColor.ink(alpha: 1.0) // HACK to get the gap before the separator colored ink
+
         
         return cell
     }

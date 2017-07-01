@@ -66,11 +66,12 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         
         
         // BUTTONS
-        btn_cancel = UIButton(frame: CGRect(x:0, y: 20, width: 64, height: 60))
-        btn_cancel.backgroundColor = UIColor.blue
+        btn_cancel = UIButton(frame: CGRect(x:10, y: 20, width: 64, height: 60))
+        btn_cancel.backgroundColor = UIColor.clear
         btn_cancel.setTitleColor(UIColor.white, for: UIControlState.normal)
         btn_cancel.layer.cornerRadius = 4
-        btn_cancel.layer.borderWidth = 1
+        btn_cancel.layer.borderWidth = 0
+        btn_cancel.alpha = 0
         btn_cancel.setTitle("Cancel", for: .normal)
         btn_cancel.addTarget(self, action: #selector(self.didTapCancel), for: .touchUpInside)
         self.view.addSubview(btn_cancel)
@@ -78,7 +79,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         
         btn_save = UIButton(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 64))
         btn_save.center.y = card.frame.height - (64/2)
-        btn_save.backgroundColor = UIColor.blue
+        btn_save.backgroundColor = UIColor.mint(1.0)
         btn_save.setTitleColor(UIColor.white, for: UIControlState.normal)
         btn_save.layer.cornerRadius = 0
         btn_save.layer.borderWidth = 0
@@ -145,6 +146,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
 
         UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(UIViewAnimationCurve.easeInOut.rawValue)), animations: {
             self.overlay.alpha = 1.0
+            self.btn_cancel.alpha = 1.0
         }, completion: nil)
     
     }
@@ -176,7 +178,6 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         let animationCurve = curveValue.intValue
         
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(animationCurve << 16)), animations: {
-            self.overlay.alpha = 0
             self.card.layer.shadowOpacity = 0
             self.card.backgroundColor = UIColor.white
             self.card.center.y = self.card_origin_y
@@ -193,8 +194,16 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         self.textField_a.endEditing(true)
         self.textField_b.endEditing(true)
         self.textField_c.endEditing(true)
+        
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(UIViewAnimationCurve.easeInOut.rawValue)), animations: {
+            self.btn_cancel.alpha = 0
+            self.overlay.alpha = 0
+            self.card.layer.shadowOpacity = 0
+            self.card.backgroundColor = UIColor.white
+            self.card.center.y = self.screenSize.height + (280/2)
+        }, completion: nil)
 
-        delay(delay: 0.5){
+        delay(delay: 0.25){
             self.dismiss(animated: false, completion: { () -> Void in
                 //
             })

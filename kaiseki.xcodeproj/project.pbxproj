@@ -10,8 +10,6 @@
 		0A029FF2F1E867912AD71618 /* Pods_kaisekiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A87A8495F841D5C00ED96C2 /* Pods_kaisekiUITests.framework */; };
 		8782D0C1AC4B761ECA7868EE /* Pods_kaiseki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4B2A31A1BEC13491C11F74 /* Pods_kaiseki.framework */; };
 		BFBFAF2ED934A980505D26FE /* Pods_kaisekiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 549E8ED6A44BA7C7F1FFD95B /* Pods_kaisekiTests.framework */; };
-		F300C1A71EAC44AB00D58005 /* ThreadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300C1A51EAC44AB00D58005 /* ThreadTableViewCell.swift */; };
-		F300C1A81EAC44AB00D58005 /* ThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F300C1A61EAC44AB00D58005 /* ThreadTableViewCell.xib */; };
 		F30F4C931EBE6FC7007F0800 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30F4C921EBE6FC7007F0800 /* TitleView.swift */; };
 		F30F4C971EBE7007007F0800 /* TitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F30F4C961EBE7007007F0800 /* TitleView.xib */; };
 		F31AA7CE1EA434C9005DB6EE /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31AA7CD1EA434C9005DB6EE /* Thread.swift */; };
@@ -28,6 +26,10 @@
 		F342EDEF1EA2C1EF00A6C713 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F342EDEE1EA2C1EF00A6C713 /* Post.swift */; };
 		F342EDF51EA2C9D700A6C713 /* CoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F342EDF41EA2C9D700A6C713 /* CoverView.xib */; };
 		F342EDF71EA2CA6D00A6C713 /* CoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F342EDF61EA2CA6D00A6C713 /* CoverView.swift */; };
+		F37AA9A91F083FD000CCB238 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AA9A71F083FD000CCB238 /* PostTableViewCell.swift */; };
+		F37AA9AA1F083FD000CCB238 /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F37AA9A81F083FD000CCB238 /* PostTableViewCell.xib */; };
+		F37AA9AC1F08499C00CCB238 /* CarTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F37AA9AB1F08499C00CCB238 /* CarTitleView.xib */; };
+		F37AA9AE1F084AE700CCB238 /* CarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AA9AD1F084AE700CCB238 /* CarTitleView.swift */; };
 		F3B19B391EF0E3EE00C08FC2 /* SectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3B19B381EF0E3EE00C08FC2 /* SectionView.xib */; };
 		F3B19B3B1EF0E52700C08FC2 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B19B3A1EF0E52700C08FC2 /* SectionView.swift */; };
 		F3B19B3D1EF0E94800C08FC2 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B19B3C1EF0E94800C08FC2 /* NewPostViewController.swift */; };
@@ -61,8 +63,6 @@
 		C9E4DA5DA6ACCBC5A5165625 /* Pods-kaiseki.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kaiseki.debug.xcconfig"; path = "Pods/Target Support Files/Pods-kaiseki/Pods-kaiseki.debug.xcconfig"; sourceTree = "<group>"; };
 		CB4B2A31A1BEC13491C11F74 /* Pods_kaiseki.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kaiseki.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A51CAAB3C21733927D351A /* Pods-kaiseki.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kaiseki.release.xcconfig"; path = "Pods/Target Support Files/Pods-kaiseki/Pods-kaiseki.release.xcconfig"; sourceTree = "<group>"; };
-		F300C1A51EAC44AB00D58005 /* ThreadTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadTableViewCell.swift; sourceTree = "<group>"; };
-		F300C1A61EAC44AB00D58005 /* ThreadTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThreadTableViewCell.xib; sourceTree = "<group>"; };
 		F30F4C921EBE6FC7007F0800 /* TitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		F30F4C961EBE7007007F0800 /* TitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleView.xib; sourceTree = "<group>"; };
 		F31AA7CD1EA434C9005DB6EE /* Thread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
@@ -87,6 +87,10 @@
 		F342EDEE1EA2C1EF00A6C713 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		F342EDF41EA2C9D700A6C713 /* CoverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverView.xib; sourceTree = "<group>"; };
 		F342EDF61EA2CA6D00A6C713 /* CoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverView.swift; sourceTree = "<group>"; };
+		F37AA9A71F083FD000CCB238 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		F37AA9A81F083FD000CCB238 /* PostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
+		F37AA9AB1F08499C00CCB238 /* CarTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarTitleView.xib; sourceTree = "<group>"; };
+		F37AA9AD1F084AE700CCB238 /* CarTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTitleView.swift; sourceTree = "<group>"; };
 		F3B19B381EF0E3EE00C08FC2 /* SectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionView.xib; sourceTree = "<group>"; };
 		F3B19B3A1EF0E52700C08FC2 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		F3B19B3C1EF0E94800C08FC2 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
@@ -147,8 +151,8 @@
 		F300C1A91EAC44B200D58005 /* Table Cells */ = {
 			isa = PBXGroup;
 			children = (
-				F300C1A51EAC44AB00D58005 /* ThreadTableViewCell.swift */,
-				F300C1A61EAC44AB00D58005 /* ThreadTableViewCell.xib */,
+				F37AA9A71F083FD000CCB238 /* PostTableViewCell.swift */,
+				F37AA9A81F083FD000CCB238 /* PostTableViewCell.xib */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -240,6 +244,8 @@
 				F342EDF41EA2C9D700A6C713 /* CoverView.xib */,
 				F30F4C921EBE6FC7007F0800 /* TitleView.swift */,
 				F30F4C961EBE7007007F0800 /* TitleView.xib */,
+				F37AA9AB1F08499C00CCB238 /* CarTitleView.xib */,
+				F37AA9AD1F084AE700CCB238 /* CarTitleView.swift */,
 				F3B19B3A1EF0E52700C08FC2 /* SectionView.swift */,
 				F3B19B381EF0E3EE00C08FC2 /* SectionView.xib */,
 			);
@@ -367,9 +373,10 @@
 				F341B0E61E9047A8007AB0BF /* LaunchScreen.storyboard in Resources */,
 				F341B10A1E9047B1007AB0BF /* GoogleService-Info.plist in Resources */,
 				F341B0E31E9047A8007AB0BF /* Assets.xcassets in Resources */,
-				F300C1A81EAC44AB00D58005 /* ThreadTableViewCell.xib in Resources */,
+				F37AA9AC1F08499C00CCB238 /* CarTitleView.xib in Resources */,
 				F3B19B391EF0E3EE00C08FC2 /* SectionView.xib in Resources */,
 				F30F4C971EBE7007007F0800 /* TitleView.xib in Resources */,
+				F37AA9AA1F083FD000CCB238 /* PostTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,9 +543,10 @@
 				F342EDE71E9B187E00A6C713 /* iCarousel.m in Sources */,
 				F3B19B3F1EF0EA5700C08FC2 /* NewThreadViewController.swift in Sources */,
 				F3B19B3B1EF0E52700C08FC2 /* SectionView.swift in Sources */,
-				F300C1A71EAC44AB00D58005 /* ThreadTableViewCell.swift in Sources */,
 				F342EDF71EA2CA6D00A6C713 /* CoverView.swift in Sources */,
 				F3B19B3D1EF0E94800C08FC2 /* NewPostViewController.swift in Sources */,
+				F37AA9AE1F084AE700CCB238 /* CarTitleView.swift in Sources */,
+				F37AA9A91F083FD000CCB238 /* PostTableViewCell.swift in Sources */,
 				F341B0DC1E9047A8007AB0BF /* AppDelegate.swift in Sources */,
 				F31AA7D01EA45AD9005DB6EE /* ThreadViewController.swift in Sources */,
 				F341B10C1E904C76007AB0BF /* HomeViewController.swift in Sources */,
