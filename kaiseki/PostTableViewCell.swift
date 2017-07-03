@@ -11,9 +11,13 @@ import UIKit
 class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var mileageLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        backgroundColor = .clear
+
         // Initialization code
     }
 
@@ -22,5 +26,6 @@ class PostTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
     
 }

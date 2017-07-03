@@ -64,11 +64,21 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // INITIALIZE BUTTON
         
-        btnPost.frame = CGRect(x:20, y:50, width:80, height:30)
+        let postImage = UIImage(named: "btn-compose")
+        let btnPostImage = UIButton(type: .custom)
+        btnPostImage.setImage(postImage, for: UIControlState.normal)
+
+        
+        btnPost.frame = CGRect(x:20, y:50, width:30, height:30)
         btnPost.setTitleColor(UIColor.black, for: UIControlState.normal)
-        btnPost.setTitle("Post", for: UIControlState.normal)
+        btnPost.setImage(postImage, for: UIControlState.normal)
         btnPost.addTarget(self, action: #selector(self.composePost), for: .touchUpInside)
+        
         self.navigationItem.setRightBarButton(UIBarButtonItem(customView: btnPost), animated: true);
+        
+        // CHANGE NAVIGATION BAR COLOR
+
+        self.navigationController?.navigationBar.backgroundColor = UIColor.ink(alpha: 1.0)
         
         
         // SETUP TABLE
@@ -122,13 +132,14 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 newPosts.append(postObject)
             }
             
-            self.posts = newPosts
+            self.posts = newPosts.reversed()
             self.table_thread.reloadData()
         }) { (error: Error) in
             print(error.localizedDescription)
         }
         
     }
+    
     
     
 
@@ -139,17 +150,21 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let postAlert = UIAlertController(title: "Your post", message: "Enter your post", preferredStyle: .alert)
         postAlert.addTextField { (textField:UITextField) in
+            textField.placeholder = "Your mileage"
+        }
+        postAlert.addTextField { (textField:UITextField) in
             textField.placeholder = "Your post"
         }
         
+        
         postAlert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action:UIAlertAction) in
-            if let postContent = postAlert.textFields?.first?.text{
+            if let mileageContent = postAlert.textFields?.first?.text, let postContent = postAlert.textFields?.last?.text{
                 
                 // CREATE A UNIQUE ID FOR THIS POST
                 let postRef = self.postsRef.childByAutoId()
                 
                 // CREATE THE POST WITH ALL THE THINGS NEEDED
-                let post = Post(content: postContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!, addedToThread:self.threadKey as String)
+                let post = Post(mileage: mileageContent, timestamp: FIRServerValue.timestamp(), content: postContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!, addedToThread:self.threadKey as String)
                 
                 // CONVERT THE POST TO DICTIONARY
                 postRef.setValue(post.toAny())
@@ -177,6 +192,24 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let post = posts[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath) as! PostTableViewCell
+        
+        let mileageNumber = Int(post.mileage)
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        let formattedNumber = numberFormatter.string(from: NSNumber(value:mileageNumber!))
+        
+        
+        let timestamp = post.timestamp
+        let date = timestamp as! Int
+        let converted = NSDate(timeIntervalSince1970: TimeInterval(date / 1000))
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = NSTimeZone.local
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        let dateString = dateFormatter.string(from: converted as Date)
+
+        
+        cell.mileageLabel.text = formattedNumber
+        cell.dateLabel.text = dateString
         cell.contentLabel.text = post.content
         cell.contentView.layoutMargins = UIEdgeInsets.zero // HACK to remove native cell padding
 //        cell.backgroundColor = UIColor.ink(alpha: 1.0) // HACK to get the gap before the separator colored ink

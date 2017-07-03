@@ -97,10 +97,12 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         // INITIALIZE BUTTON
         
+        let threadImage = UIImage(named: "btn-add-car")
  
-        btnThread.frame = CGRect(x:100, y:50, width:80, height:30)
+        btnThread.frame = CGRect(x:100, y:50, width:37, height:30)
         btnThread.setTitleColor(UIColor.white, for: UIControlState.normal)
-        btnThread.setTitle("Add Car", for: UIControlState.normal)
+//        btnThread.setTitle("Add Car", for: UIControlState.normal)
+        btnThread.setImage(threadImage, for: UIControlState.normal)
         btnThread.addTarget(self, action: #selector(self.newThread), for: .touchUpInside)
         self.navigationItem.setRightBarButton(UIBarButtonItem(customView: btnThread), animated: true);
         
@@ -237,7 +239,6 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         // PASS DATA
         vc.dataTitle = threads[sender.tag].primaryContent
         vc.dataMeta = threads[sender.tag].secondaryContent
-        vc.title = threads[sender.tag].primaryContent
         vc.threadKey = threads[sender.tag].key
         
         self.navigationController?.pushViewController(vc, animated: true)

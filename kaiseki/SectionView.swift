@@ -25,7 +25,7 @@ class SectionView: UIView {
     }
     
     private func nibSetup() {
-        backgroundColor = .white
+        backgroundColor = .clear
         
         view = loadViewFromNib()
         view.frame = bounds

@@ -16,6 +16,8 @@ struct Post {
     // DECLARE ATTRIBUTES
     
     let key:String!
+    let mileage: String!
+    let timestamp: Any!
     let content:String!
     let addedByUser:String!
     let addedToThread:String!
@@ -24,8 +26,10 @@ struct Post {
     
     // INITIALIZE POST WITH ARBITRARY DATA
     
-    init(content:String, addedByUser:String, addedToThread:String, key:String = ""){
+    init(mileage:String, timestamp:Any, content:String, addedByUser:String, addedToThread:String, key:String = ""){
         self.key = key
+        self.mileage = mileage
+        self.timestamp = timestamp
         self.content = content
         self.addedByUser = addedByUser
         self.addedToThread = addedToThread
@@ -43,6 +47,17 @@ struct Post {
         
         // Firebase snapshots are in json so we have to convert it to a dictionary to access it
     
+        if let postDict = snapshot.value as? NSDictionary, let mileageContent = postDict["mileage"] as? String {
+            mileage = mileageContent
+        }else{
+            mileage = ""
+        }
+        
+        if let postDict = snapshot.value as? NSDictionary, let timeStampContent = postDict["timestamp"] as? Any {
+            timestamp = timeStampContent
+        }else{
+            timestamp = ""
+        }
         
         if let postDict = snapshot.value as? NSDictionary, let postContent = postDict["content"] as? String {
             content = postContent
@@ -62,6 +77,6 @@ struct Post {
     // RETURN THE DICTIONARY
     
     func toAny() -> Any {
-        return ["content":content, "addedByUser":addedByUser, "addedToThread":addedToThread]
+        return ["mileage":mileage, "timestamp":timestamp, "content":content, "addedByUser":addedByUser, "addedToThread":addedToThread]
     }
 }

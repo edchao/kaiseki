@@ -14,6 +14,7 @@ class TitleView: UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         nibSetup()
@@ -25,7 +26,7 @@ class TitleView: UIView {
     }
     
     private func nibSetup() {
-        backgroundColor = .white
+        backgroundColor = .clear
         
         view = loadViewFromNib()
         view.frame = bounds

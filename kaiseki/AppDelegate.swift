@@ -40,6 +40,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navC = UINavigationController()
         homeVC = HomeViewController()
         navC!.pushViewController(homeVC!, animated: false)
+     
+        
+        // STATUS BAR
+        
+        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+            statusBar.tintColor = UIColor.white
+            statusBar.backgroundColor = UIColor.ink(alpha: 1.0)
+        }
+        UIApplication.shared.statusBarStyle = .lightContent
         
         
         // WINDOW
@@ -54,6 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.layer.isOpaque = false
         }
         return true
+
+   
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
