@@ -55,7 +55,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         // CARD
         
         card = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 280))
-        let card_origin_y = self.view.frame.height + 90
+        let card_origin_y = self.view.frame.height + 140
         card.center.y = card_origin_y
         card.backgroundColor = UIColor.white
         card.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -83,7 +83,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         btn_save.setTitleColor(UIColor.white, for: UIControlState.normal)
         btn_save.layer.cornerRadius = 0
         btn_save.layer.borderWidth = 0
-        btn_save.setTitle("Save", for: .normal)
+        btn_save.setTitle("Add Car", for: .normal)
         btn_save.addTarget(self, action: #selector(self.didTapSave), for: .touchUpInside)
         btn_save.alpha = 1.0
         card.addSubview(btn_save)
@@ -99,6 +99,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         textField_a.delegate = self
         textField_a.font = .systemFont(ofSize: 16)
         textField_a.isUserInteractionEnabled = true
+        textField_a.addTarget(self, action: #selector(self.textFieldADidChange), for: UIControlEvents.editingChanged)
         card.addSubview(textField_a)
         
   
@@ -112,6 +113,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         textField_b.delegate = self
         textField_b.font = .systemFont(ofSize: 16)
         textField_b.isUserInteractionEnabled = true
+        textField_b.addTarget(self, action: #selector(self.textFieldBDidChange), for: UIControlEvents.editingChanged)
         card.addSubview(textField_b)
         
 
@@ -125,6 +127,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         textField_c.delegate = self
         textField_c.font = .systemFont(ofSize: 16)
         textField_c.isUserInteractionEnabled = true
+        textField_c.addTarget(self, action: #selector(self.textFieldCDidChange), for: UIControlEvents.editingChanged)
         card.addSubview(textField_c)
         
         
@@ -133,7 +136,10 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
+        // SETUP
         
+        disableBtn()
+
         
     }
     
@@ -185,7 +191,46 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    // TEXTFIELD BEHAVIOR
+    
+    func textFieldADidChange(_ textField: UITextField) {
+        checkInput()
+    }
+    func textFieldBDidChange(_ textField: UITextField) {
+        checkInput()
+    }
+    func textFieldCDidChange(_ textField: UITextField) {
+        checkInput()
+    }
+    
+    
+    func checkInput(){
+        if textField_a.hasText {
+            if textField_b.hasText {
+                if textField_c.hasText {
+                    enableBtn()
+                }else {
+                    disableBtn()
+                }
+            }else {
+                disableBtn()
+            }
+        } else {
+            disableBtn()
+        }
+    }
 
+    
+    func disableBtn(){
+        self.btn_save.alpha = 0.3
+        self.btn_save.isEnabled = false
+    }
+    
+    func enableBtn(){
+        self.btn_save.alpha = 1
+        self.btn_save.isEnabled = true
+    }
+    
     
     
     // BUTTON ACTIONS

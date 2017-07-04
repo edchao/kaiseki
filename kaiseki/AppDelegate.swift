@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var navC: UINavigationController?
     var homeVC: HomeViewController?
+    var authVC: AuthViewController?
 
 
 
@@ -26,21 +27,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // FIREBASE
         
         FIRApp.configure()
-        FIRAuth.auth()?.signIn(withEmail: "aaa@aaa.com", password: "aaaaaa", completion: { (user:FIRUser?, error:Error?) in
-            if error == nil {
-                print(user?.email ?? "This is the user email")
-            }else{
-                print(error?.localizedDescription ?? "this is the error localized description")
-            }
-        })
+        
+        
+        
+        if FIRAuth.auth()?.currentUser != nil {
+            navC = UINavigationController()
+            homeVC = HomeViewController()
+            navC!.pushViewController(homeVC!, animated: false)
+        } else {
+            navC = UINavigationController()
+            authVC = AuthViewController()
+            navC!.pushViewController(authVC!, animated: false)
+        }
+        
+//        FIRAuth.auth()?.signIn(withEmail: "aaa@aaa.com", password: "aaaaaa", completion: { (user:FIRUser?, error:Error?) in
+//            if error == nil {
+//                print(user?.email ?? "This is the user email")
+//            }else{
+//                print(error?.localizedDescription ?? "this is the error localized description")
+//            }
+//        })
         
         
         // NAVIGATION STACk
         
-        navC = UINavigationController()
-        homeVC = HomeViewController()
-        navC!.pushViewController(homeVC!, animated: false)
+//        navC = UINavigationController()
+//        homeVC = HomeViewController()
+//        navC!.pushViewController(homeVC!, animated: false)
+        
+
      
+        
+        // NAVIGATION BACK IMAGE
+        
+        var backButtonImage = UIImage(named: "btn-back")
+        backButtonImage = backButtonImage?.stretchableImage(withLeftCapWidth: 26, topCapHeight: 26)
+        UIBarButtonItem.appearance().setBackButtonBackgroundImage(backButtonImage, for: .normal, barMetrics: .default)
+        UIBarButtonItem.appearance().setBackButtonBackgroundImage(backButtonImage, for: UIControlState.selected, barMetrics: .default)
+
         
         // STATUS BAR
         

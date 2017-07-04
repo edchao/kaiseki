@@ -10,12 +10,16 @@ import UIKit
 import FirebaseDatabase
 import FirebaseAuth
 
-class NewPostViewController: UIViewController, UITextFieldDelegate {
+class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     // FIREBASE DECLARATIONS
     
-    var threadsRef: FIRDatabaseReference!
-    var threads = [Thread]()
+    var postsRef:FIRDatabaseReference!
+    var posts = [Post]()
+    
+    // PASSED DATA FROM HOME
+    
+    var threadKey:String!
     
     
     // VARS
@@ -27,7 +31,9 @@ class NewPostViewController: UIViewController, UITextFieldDelegate {
     // ELEMENTS
     
     var textField_a : UITextField!
-    var textField_b : UITextField!
+    var textField_b : UITextView!
+    var label_note : UILabel!
+
     
     var overlay: UIView!
     var card: UIView!
@@ -40,7 +46,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate {
         
         // SET FIREBASE DATA REF
         
-        threadsRef = FIRDatabase.database().reference().child("thread-items")
+        postsRef = FIRDatabase.database().reference().child("post-items")
         
         
         // OVERLAY
@@ -82,8 +88,8 @@ class NewPostViewController: UIViewController, UITextFieldDelegate {
         btn_save.setTitleColor(UIColor.white, for: UIControlState.normal)
         btn_save.layer.cornerRadius = 0
         btn_save.layer.borderWidth = 0
-        btn_save.setTitle("Save", for: .normal)
-//        btn_save.addTarget(self, action: #selector(self.didTapSave), for: .touchUpInside)
+        btn_save.setTitle("Add Note", for: .normal)
+        btn_save.addTarget(self, action: #selector(self.didTapSave), for: .touchUpInside)
         btn_save.alpha = 1.0
         card.addSubview(btn_save)
         
@@ -94,24 +100,34 @@ class NewPostViewController: UIViewController, UITextFieldDelegate {
         textField_a = UITextField(frame: CGRect(x: 10, y: 10, width: self.view.frame.width - 20, height: 32))
         textField_a.backgroundColor = UIColor.clear
         textField_a.textColor = UIColor.black
-        textField_a.placeholder = "Year (e.g. 2000)"
+        textField_a.placeholder = "Mileage (e.g. 1000)"
         textField_a.delegate = self
         textField_a.font = .systemFont(ofSize: 16)
+        textField_a.addTarget(self, action: #selector(self.textFieldDidChange), for: UIControlEvents.editingChanged)
         textField_a.isUserInteractionEnabled = true
         card.addSubview(textField_a)
         
         
         
-        // TEXTFIELD_B
+        // textField_b
         
-        textField_b = UITextField(frame: CGRect(x: 10, y: 63, width: self.view.frame.width - 20, height: 32))
+        textField_b = UITextView(frame: CGRect(x: 7, y: 63, width: self.view.frame.width - 20, height: 32))
         textField_b.backgroundColor = UIColor.clear
-        textField_b.textColor = UIColor.black
-        textField_b.placeholder = "Make (e.g. Honda)"
+        textField_b.textColor = UIColor.ink()
         textField_b.delegate = self
         textField_b.font = .systemFont(ofSize: 16)
         textField_b.isUserInteractionEnabled = true
         card.addSubview(textField_b)
+        
+        
+        // label for textField_b
+        
+        label_note = UILabel(frame: CGRect(x: 4, y: 4, width: view.frame.width, height: 30))
+        label_note.font = label_note.font.withSize(16)
+        label_note.textColor = UIColor.placeHolderColor()
+        label_note.text = "Write something (e.g. oil change)"
+        label_note.numberOfLines = 0
+        textField_b.addSubview(label_note)
         
         
         
@@ -121,6 +137,10 @@ class NewPostViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        
+        // OTHER SETUP
+        
+        disableBtn()
         
         
     }
@@ -174,6 +194,51 @@ class NewPostViewController: UIViewController, UITextFieldDelegate {
     
     
     
+    // TEXTVIEW and TEXTFIELD BEHAVIOR
+    
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textField_b.hasText {
+            self.label_note.isHidden = true
+            checkInput()
+        } else {
+            self.label_note.isHidden = false
+            checkInput()
+        }
+    }
+    
+    
+    func textFieldDidChange(_ textField: UITextField) {
+        checkInput()
+    }
+    
+    
+    
+    func checkInput(){
+        if textField_a.hasText {
+            if textField_b.hasText {
+                enableBtn()
+            }
+            else {
+                disableBtn()
+            }
+        } else {
+            disableBtn()
+        }
+    }
+    
+    
+    func disableBtn(){
+        self.btn_save.alpha = 0.3
+        self.btn_save.isEnabled = false
+    }
+    
+    func enableBtn(){
+        self.btn_save.alpha = 1
+        self.btn_save.isEnabled = true
+    }
+    
+    
     
     
     // BUTTON ACTIONS
@@ -199,24 +264,32 @@ class NewPostViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-//    func didTapSave(sender:UIButton){
-//        self.textField_a.endEditing(true)
-//        self.textField_b.endEditing(true)
-//        
-//        if let postPrimaryContent = textField_a.text, let postSecondaryContent = textField_b.text {
-//            let post = Post(primaryContent: postPrimaryContent, secondaryContent: postSecondaryContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!)
-//            let postRef = self.postRef.childByAutoId()
-//            postRef.setValue(thread.toAny())
-//        }
-//        
-//        
-//        delay(delay: 0.5){
-//            self.dismiss(animated: false, completion: { () -> Void in
-//                //
-//            })
-//        }
-//        
-//    }
+    func didTapSave(sender:UIButton){
+        self.textField_a.endEditing(true)
+        self.textField_b.endEditing(true)
+        
+        if let postPrimaryContent = textField_a.text, let postSecondaryContent = textField_b.text {
+            
+            // CREATE A UNIQUE ID FOR THIS POST
+            let postRef = self.postsRef.childByAutoId()
+            
+            // CREATE THE POST WITH ALL THE THINGS NEEDED
+            let post = Post(mileage: postPrimaryContent, timestamp: FIRServerValue.timestamp(), content: postSecondaryContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!, addedToThread:self.threadKey as String)
+            
+            // CONVERT THE POST TO DICTIONARY
+            postRef.setValue(post.toAny())
+
+        }
+        
+        
+        delay(delay: 0.5){
+            self.dismiss(animated: false, completion: { () -> Void in
+                //
+            })
+        }
+        
+        
+    }
     
     
     // ETC

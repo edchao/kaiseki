@@ -30,6 +30,7 @@
 		F37AA9AA1F083FD000CCB238 /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F37AA9A81F083FD000CCB238 /* PostTableViewCell.xib */; };
 		F37AA9AC1F08499C00CCB238 /* CarTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F37AA9AB1F08499C00CCB238 /* CarTitleView.xib */; };
 		F37AA9AE1F084AE700CCB238 /* CarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AA9AD1F084AE700CCB238 /* CarTitleView.swift */; };
+		F3944C251F0C15C7001E609B /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3944C241F0C15C7001E609B /* AuthViewController.swift */; };
 		F3B19B391EF0E3EE00C08FC2 /* SectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3B19B381EF0E3EE00C08FC2 /* SectionView.xib */; };
 		F3B19B3B1EF0E52700C08FC2 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B19B3A1EF0E52700C08FC2 /* SectionView.swift */; };
 		F3B19B3D1EF0E94800C08FC2 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B19B3C1EF0E94800C08FC2 /* NewPostViewController.swift */; };
@@ -91,6 +92,7 @@
 		F37AA9A81F083FD000CCB238 /* PostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
 		F37AA9AB1F08499C00CCB238 /* CarTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarTitleView.xib; sourceTree = "<group>"; };
 		F37AA9AD1F084AE700CCB238 /* CarTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTitleView.swift; sourceTree = "<group>"; };
+		F3944C241F0C15C7001E609B /* AuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		F3B19B381EF0E3EE00C08FC2 /* SectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionView.xib; sourceTree = "<group>"; };
 		F3B19B3A1EF0E52700C08FC2 /* SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		F3B19B3C1EF0E94800C08FC2 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
@@ -219,10 +221,11 @@
 		F342EDEA1EA2C1A400A6C713 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F3944C241F0C15C7001E609B /* AuthViewController.swift */,
 				F341B10B1E904C76007AB0BF /* HomeViewController.swift */,
-				F3B19B3C1EF0E94800C08FC2 /* NewPostViewController.swift */,
-				F3B19B3E1EF0EA5700C08FC2 /* NewThreadViewController.swift */,
 				F31AA7CF1EA45AD9005DB6EE /* ThreadViewController.swift */,
+				F3B19B3E1EF0EA5700C08FC2 /* NewThreadViewController.swift */,
+				F3B19B3C1EF0E94800C08FC2 /* NewPostViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				TargetAttributes = {
 					F341B0D71E9047A8007AB0BF = {
 						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = XYHVDD456K;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
@@ -546,6 +550,7 @@
 				F342EDF71EA2CA6D00A6C713 /* CoverView.swift in Sources */,
 				F3B19B3D1EF0E94800C08FC2 /* NewPostViewController.swift in Sources */,
 				F37AA9AE1F084AE700CCB238 /* CarTitleView.swift in Sources */,
+				F3944C251F0C15C7001E609B /* AuthViewController.swift in Sources */,
 				F37AA9A91F083FD000CCB238 /* PostTableViewCell.swift in Sources */,
 				F341B0DC1E9047A8007AB0BF /* AppDelegate.swift in Sources */,
 				F31AA7D01EA45AD9005DB6EE /* ThreadViewController.swift in Sources */,
@@ -700,6 +705,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = XYHVDD456K;
 				INFOPLIST_FILE = kaiseki/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -746,6 +752,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = XYHVDD456K;
 				INFOPLIST_FILE = kaiseki/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

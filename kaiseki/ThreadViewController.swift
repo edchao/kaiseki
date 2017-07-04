@@ -28,7 +28,9 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var table_thread: UITableView! = UITableView()
     let screenSize: CGRect = UIScreen.main.bounds
 
-
+    // GRADIENT MASK
+    
+    var gradientMask: UIView!
 
     // BUTTONS
     
@@ -72,14 +74,20 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
         btnPost.frame = CGRect(x:20, y:50, width:30, height:30)
         btnPost.setTitleColor(UIColor.black, for: UIControlState.normal)
         btnPost.setImage(postImage, for: UIControlState.normal)
-        btnPost.addTarget(self, action: #selector(self.composePost), for: .touchUpInside)
+        btnPost.addTarget(self, action: #selector(self.newPost), for: .touchUpInside)
         
         self.navigationItem.setRightBarButton(UIBarButtonItem(customView: btnPost), animated: true);
         
         // CHANGE NAVIGATION BAR COLOR
 
         self.navigationController?.navigationBar.backgroundColor = UIColor.ink(alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.topItem?.title = "";
         
+        let backImage = UIImage(named: "btn-back")
+        self.navigationController?.navigationBar.backIndicatorImage = backImage
+
+
         
         // SETUP TABLE
         
@@ -96,6 +104,25 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
         table_thread.backgroundColor = UIColor.ink(alpha: 1.0)
         self.view.addSubview(table_thread)
         self.table_thread.rowHeight = UITableViewAutomaticDimension
+        
+        
+        
+        // GRADIENT MASK
+        
+        let navigationBarHeight: CGFloat = self.navigationController!.navigationBar.frame.height
+        let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+
+        
+        gradientMask = UIView(frame: CGRect(x: 0, y: navigationBarHeight + statusBarHeight, width: screenSize.width, height: 30))
+        let gradient = CAGradientLayer()
+        
+        gradient.frame = gradientMask.bounds
+        gradient.colors = [UIColor.ink(alpha: 1.0).cgColor, UIColor.ink(alpha: 0).cgColor]
+        
+        gradientMask.layer.insertSublayer(gradient, at: 0)
+        self.view.addSubview(gradientMask)
+
+        
     
 
         // INITIALIZE TITLEVIEW
@@ -142,39 +169,54 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     
-
     // POST BUTTON
     
-    func composePost(sender:AnyObject){
-        print("Trying to Post")
+    func newPost(sender: AnyObject){
+        let newPostVC: NewPostViewController = NewPostViewController(nibName: nil, bundle: nil)
+        self.definesPresentationContext = true
+        newPostVC.modalPresentationStyle = UIModalPresentationStyle.custom
+        newPostVC.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
         
-        let postAlert = UIAlertController(title: "Your post", message: "Enter your post", preferredStyle: .alert)
-        postAlert.addTextField { (textField:UITextField) in
-            textField.placeholder = "Your mileage"
+        // PASS DATA
+        newPostVC.threadKey = self.threadKey
+
+        
+        self.present(newPostVC, animated: false) { () -> Void in
+            //
         }
-        postAlert.addTextField { (textField:UITextField) in
-            textField.placeholder = "Your post"
-        }
-        
-        
-        postAlert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action:UIAlertAction) in
-            if let mileageContent = postAlert.textFields?.first?.text, let postContent = postAlert.textFields?.last?.text{
-                
-                // CREATE A UNIQUE ID FOR THIS POST
-                let postRef = self.postsRef.childByAutoId()
-                
-                // CREATE THE POST WITH ALL THE THINGS NEEDED
-                let post = Post(mileage: mileageContent, timestamp: FIRServerValue.timestamp(), content: postContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!, addedToThread:self.threadKey as String)
-                
-                // CONVERT THE POST TO DICTIONARY
-                postRef.setValue(post.toAny())
-                
-            }
-        }))
-        
-        
-        self.present(postAlert, animated: true, completion:nil)
     }
+    
+    
+//    func composePost(sender:AnyObject){
+//        print("Trying to Post")
+//        
+//        let postAlert = UIAlertController(title: "Your post", message: "Enter your post", preferredStyle: .alert)
+//        postAlert.addTextField { (textField:UITextField) in
+//            textField.placeholder = "Your mileage"
+//        }
+//        postAlert.addTextField { (textField:UITextField) in
+//            textField.placeholder = "Your post"
+//        }
+//        
+//        
+//        postAlert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action:UIAlertAction) in
+//            if let mileageContent = postAlert.textFields?.first?.text, let postContent = postAlert.textFields?.last?.text{
+//                
+//                // CREATE A UNIQUE ID FOR THIS POST
+//                let postRef = self.postsRef.childByAutoId()
+//                
+//                // CREATE THE POST WITH ALL THE THINGS NEEDED
+//                let post = Post(mileage: mileageContent, timestamp: FIRServerValue.timestamp(), content: postContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!, addedToThread:self.threadKey as String)
+//                
+//                // CONVERT THE POST TO DICTIONARY
+//                postRef.setValue(post.toAny())
+//                
+//            }
+//        }))
+//        
+//        
+//        self.present(postAlert, animated: true, completion:nil)
+//    }
     
     
     // TABLE FUNCTIONS

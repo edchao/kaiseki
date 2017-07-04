@@ -17,15 +17,18 @@ extension UIColor {
     class func coal(alpha: CGFloat = 1.0) -> UIColor {
         return UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: alpha)
     }
+    class func ash(alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: alpha)
+    }
     class func mint(_ alpha: CGFloat = 1.0) -> UIColor {
         return UIColor(red: 76/255, green: 198/255, blue: 147/255, alpha: alpha)
     }
 }
 
-extension UIFont {
+extension UIColor {
     
-    class func primaryFont() -> UIFont {
-        return UIFont(name: "SanFranciscoDisplay-Regular", size: 18.0)!
+    class func placeHolderColor() -> UIColor {
+        return UIColor(red: 0.78, green: 0.78, blue: 0.80, alpha: 1.0)
     }
     
 }
@@ -45,13 +48,17 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     
     // BUTTONS
     
-    let btnThread = UIButton()
+    let btn_thread = UIButton()
+    let btn_logout = UIButton()
     
     
     // FIREBASE DECLARATIONS
     
     var threadsRef: FIRDatabaseReference!
     var threads = [Thread]()
+    var user: User!
+    let usersRef = FIRDatabase.database().reference(withPath: "online")
+
     
     
     // CAROUSEL DECLARATIONS
@@ -99,14 +106,22 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         let threadImage = UIImage(named: "btn-add-car")
  
-        btnThread.frame = CGRect(x:100, y:50, width:37, height:30)
-        btnThread.setTitleColor(UIColor.white, for: UIControlState.normal)
-//        btnThread.setTitle("Add Car", for: UIControlState.normal)
-        btnThread.setImage(threadImage, for: UIControlState.normal)
-        btnThread.addTarget(self, action: #selector(self.newThread), for: .touchUpInside)
-        self.navigationItem.setRightBarButton(UIBarButtonItem(customView: btnThread), animated: true);
+        btn_thread.frame = CGRect(x:100, y:50, width:40, height:26)
+        btn_thread.setTitleColor(UIColor.white, for: UIControlState.normal)
+//        btn_thread.setTitle("Add Car", for: UIControlState.normal)
+        btn_thread.setImage(threadImage, for: UIControlState.normal)
+        btn_thread.addTarget(self, action: #selector(self.newThread), for: .touchUpInside)
+        self.navigationItem.setRightBarButton(UIBarButtonItem(customView: btn_thread), animated: true);
+        
+        btn_logout.frame = CGRect(x:0, y:0, width:60, height:26)
+        btn_logout.setTitleColor(UIColor.white, for: UIControlState.normal)
+        btn_logout.setTitle("Logout", for: UIControlState.normal)
+        btn_logout.addTarget(self, action: #selector(self.logout), for: .touchUpInside)
+        self.navigationItem.setLeftBarButton(UIBarButtonItem(customView: btn_logout), animated: true);
         
 
+        
+        
         // INITIALIZE TITLEVIEW
         
         titleView = TitleView(frame: CGRect(x:0, y:120, width:screenSize.width, height:80))
@@ -119,6 +134,19 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         sectionView.sectionLabel.text = "My Cars".uppercased()
         self.view.addSubview(sectionView)
         
+        
+        // CHECK IF USER STATE HAS CHANGED or LOGGED OUT
+        
+        FIRAuth.auth()!.addStateDidChangeListener { auth, user in
+            if let _user = user {
+                self.user = User(userData: _user)
+            } else {
+                let userRef = self.usersRef.child(self.user.uid)
+                userRef.removeValue()
+            }
+        }
+        
+    
     }
 
     
@@ -126,8 +154,9 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     
     
     func startObservingDB() {
+    
         
-        threadsRef.observe(FIRDataEventType.value, with: { (snapshot: FIRDataSnapshot) in
+        threadsRef.queryOrdered(byChild: "addedByUser").queryStarting(atValue: FIRAuth.auth()?.currentUser?.email).queryEnding(atValue: FIRAuth.auth()?.currentUser?.email).observe(FIRDataEventType.value, with: { (snapshot: FIRDataSnapshot) in
             var newThreads = [Thread]()
             
             for thread in snapshot.children {
@@ -137,15 +166,30 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
             
             self.threads = newThreads
             self.carousel.reloadData()
-            
         }) { (error: Error) in
             print(error.localizedDescription)
         }
+
+        
         
     }
     
 
-
+    // LOGOUT BUTTON
+    
+    
+    func logout(_ sender: AnyObject) {
+        do {
+            let userRef = self.usersRef.child(self.user.uid)
+            userRef.removeValue()
+            try FIRAuth.auth()?.signOut()
+            self.navigationController?.popToRootViewController(animated: true)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
+    
     
     // THREAD BUTTON
     
@@ -159,37 +203,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         }
     }
     
-    func createThread(sender:AnyObject){
-        print("Trying to Create Thread")
-        
-        let threadAlert = UIAlertController(title: "Add a Car", message: "Enter your car information", preferredStyle: .alert)
-        threadAlert.addTextField { (textField:UITextField) in
-            textField.placeholder = "Year (e.g. 2000)"
-        }
-        threadAlert.addTextField { (textField:UITextField) in
-            textField.placeholder = "Model (e.g. Honda)"
-        }
-        threadAlert.addTextField { (textField:UITextField) in
-            textField.placeholder = "Make (e.g. Civic)"
-        }
-        
-        threadAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action:UIAlertAction) in
-            //
-        }))
-        
-        threadAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action:UIAlertAction) in
-            if let threadPrimaryContent = threadAlert.textFields?[2].text, let threadSecondaryContent = threadAlert.textFields?[0].text, let threadTertiaryContent = threadAlert.textFields?[1].text {
-                let thread = Thread(primaryContent: threadPrimaryContent, secondaryContent: threadSecondaryContent, tertiaryContent: threadTertiaryContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!)
-                let threadRef = self.threadsRef.childByAutoId()
-                threadRef.setValue(thread.toAny())
-            }
-        }))
-        
-        
-        
-        
-        self.present(threadAlert, animated: true, completion:nil)
-    }
+
 
     
     
@@ -238,7 +252,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         // PASS DATA
         vc.dataTitle = threads[sender.tag].primaryContent
-        vc.dataMeta = threads[sender.tag].secondaryContent
+        vc.dataMeta = threads[sender.tag].secondaryContent + " " + threads[sender.tag].tertiaryContent.uppercased()
         vc.threadKey = threads[sender.tag].key
         
         self.navigationController?.pushViewController(vc, animated: true)
