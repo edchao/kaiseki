@@ -41,6 +41,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     let screenSize: CGRect = UIScreen.main.bounds
     
     
+    
     // TITLE and SECTION LABEL
     
     var titleView = TitleView()
@@ -66,6 +67,10 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     var carousel = iCarousel()
     var numbers = [Int]()
     
+    
+    // USER EDUCATION
+    
+    var halo: UIImageView!
     
 
     // VIEW SETUP
@@ -135,6 +140,17 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         self.view.addSubview(sectionView)
         
         
+        // NUX
+        
+        halo = UIImageView(frame: CGRect(x: 0, y: 0, width: 320.0 , height: 320.0))
+        halo.image = UIImage(named: "halo")
+        halo.center.x = screenSize.width - 30
+        halo.center.y = 24
+        halo.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        halo.alpha = 0
+        self.view.addSubview(halo)
+        
+        
         // CHECK IF USER STATE HAS CHANGED or LOGGED OUT
         
         FIRAuth.auth()!.addStateDidChangeListener { auth, user in
@@ -148,7 +164,41 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
     
     }
+    
+    
+    
+    // NUX
+    
+    
+    func checkNUX(){
+        print(threads.count)
+        if threads.count == 0 {
+            animateHalo()
+        }else{
+            rescindHalo()
+        }
+    }
 
+    // ANIMATE HALO
+    
+    func animateHalo(){
+
+        UIView.animate(withDuration: 1.0, delay: 0.2, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+            self.halo.alpha = 1.0
+            self.halo.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, completion: nil)
+    }
+    
+    func rescindHalo(){
+        
+        UIView.animate(withDuration: 1.0, delay: 0.2, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+            self.halo.alpha = 0
+            self.halo.transform = CGAffineTransform(scaleX: 0 , y: 0)
+        }, completion: nil)
+    }
+    
+    
+    
     
     // READ FROM FIREBASE DATABASE
     
@@ -166,6 +216,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
             
             self.threads = newThreads
             self.carousel.reloadData()
+            self.checkNUX()
         }) { (error: Error) in
             print(error.localizedDescription)
         }
@@ -197,7 +248,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         let newThreadVC: NewThreadViewController = NewThreadViewController(nibName: nil, bundle: nil)
         self.definesPresentationContext = true
         newThreadVC.modalPresentationStyle = UIModalPresentationStyle.custom
-        newThreadVC.transitioningDelegate = self as? UIViewControllerTransitioningDelegate
+        newThreadVC.transitioningDelegate = self as UIViewControllerTransitioningDelegate
         self.present(newThreadVC, animated: false) { () -> Void in
             //
         }

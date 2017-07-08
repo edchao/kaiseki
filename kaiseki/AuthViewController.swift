@@ -16,6 +16,9 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     // VARS
     
     let screenSize: CGRect = UIScreen.main.bounds
+    var logo: UIImageView!
+    var logo_origin_y: CGFloat!
+    var btn_back: UIButton!
     var btn_signup: UIButton!
     var btn_login: UIButton!
     var btn_choose_signup: UIButton!
@@ -53,13 +56,19 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         card = UIView(frame: CGRect(x: 0, y: 0, width: 240, height: 300))
         card.center.y = card_origin_y
         card.center.x = screenSize.width / 2
-        card.backgroundColor = UIColor.ink()
+        card.backgroundColor = UIColor.clear
         card.layer.shadowOffset = CGSize(width: 0, height: 0)
         card.layer.shadowOpacity = 0.0
         card.layer.shadowRadius = 10.0
         self.view.addSubview(card)
 
+        // SET LOGO 
         
+        logo = UIImageView(frame: CGRect(x: 40.0, y: 200.0, width: 61.0, height: 43.0))
+        logo.image = UIImage(named: "logo")
+        logo_origin_y = logo.center.y
+        logo.center.x = screenSize.width/2
+        self.view.addSubview(logo)
 
         
         // SET TEXTFIELDS
@@ -72,7 +81,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         textfield_email.delegate = self
         textfield_email.font = .systemFont(ofSize: 16)
         textfield_email.addTarget(self, action: #selector(self.textFieldEmailDidChange), for: UIControlEvents.editingChanged)
-        textfield_email.isUserInteractionEnabled = true
+//        textfield_email.isUserInteractionEnabled = true
         textfield_email.alpha = 0
         textfield_email.isEnabled = false
         
@@ -86,7 +95,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         textfield_password.delegate = self
         textfield_password.font = .systemFont(ofSize: 16)
         textfield_password.addTarget(self, action: #selector(self.textFieldPWDidChange), for: UIControlEvents.editingChanged)
-        textfield_password.isUserInteractionEnabled = true
+//        textfield_password.isUserInteractionEnabled = true
         textfield_password.alpha = 0
         textfield_email.isEnabled = false
         self.card.addSubview(textfield_password)
@@ -108,8 +117,8 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     
         
         btn_choose_signup = UIButton(frame: CGRect(x:0, y: 136, width: self.card.frame.width, height: 60))
-        btn_choose_signup.backgroundColor = UIColor.mint(1.0)
-        btn_choose_signup.setTitleColor(UIColor.white, for: UIControlState.normal)
+        btn_choose_signup.backgroundColor = UIColor.white
+        btn_choose_signup.setTitleColor(UIColor.ink(), for: UIControlState.normal)
         btn_choose_signup.layer.cornerRadius = 4
         btn_choose_signup.layer.borderWidth = 0
         btn_choose_signup.setTitle("SIGNUP", for: .normal)
@@ -120,7 +129,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         
         
         btn_choose_login = UIButton(frame: CGRect(x:0, y: 206, width: self.card.frame.width, height: 60))
-        btn_choose_login.backgroundColor = UIColor.ash(alpha: 1.0)
+        btn_choose_login.backgroundColor = UIColor.coal()
         btn_choose_login.setTitleColor(UIColor.white, for: UIControlState.normal)
         btn_choose_login.layer.cornerRadius = 4
         btn_choose_login.layer.borderWidth = 0
@@ -157,6 +166,22 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         self.card.addSubview(btn_login)
         
         
+
+        
+        let backImage = UIImage(named: "btn-back")
+        let btnBackImage = UIButton(type: .custom)
+        btnBackImage.setImage(backImage, for: UIControlState.normal)
+        
+        btn_back = UIButton(frame: CGRect(x:0, y:0, width:26, height:26))
+        btn_back.setTitleColor(UIColor.white, for: UIControlState.normal)
+        btn_back.setImage(backImage, for: UIControlState.normal)
+        btn_back.addTarget(self, action: #selector(self.dismissKeyboard), for: .touchUpInside)
+        self.navigationItem.setLeftBarButton(UIBarButtonItem(customView: btn_back), animated: true);
+        btn_back.alpha = 0
+
+
+
+        
         
         // KEYBOARD
         
@@ -169,6 +194,12 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
 
     // KEYBOARD BEHAVIOR
     
+    func dismissKeyboard(sender:UIButton){
+        self.textfield_email.resignFirstResponder()
+        self.textfield_password.resignFirstResponder()
+
+    }
+    
     func keyboardWillShow(notification: NSNotification!) {
         var userInfo = notification.userInfo!
         let kbSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size
@@ -178,7 +209,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         let animationCurve = curveValue.intValue
         
         UIView.animate(withDuration: animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(animationCurve << 16)), animations: {
-            self.card.center.y = self.screenSize.height - kbSize.height - self.card.frame.height/2
+            self.card.center.y = self.screenSize.height - kbSize.height - self.card.frame.height/2 + 60
             self.btn_choose_signup.alpha = 0
             self.btn_choose_login.alpha = 0
             self.btn_choose_signup.isEnabled = false
@@ -187,6 +218,11 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             self.textfield_password.alpha = 1
             self.stroke_a.alpha = 1
             self.stroke_b.alpha = 1
+            self.logo.center.y = 43
+            self.logo.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            self.btn_back.alpha = 1
+
+
             
             if self.choice == "login" {
                 self.btn_login.alpha = 1
@@ -223,6 +259,11 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             self.btn_login.isEnabled = false
             self.btn_signup.alpha = 0
             self.btn_signup.isEnabled = false
+            self.logo.center.y = self.logo_origin_y
+            self.logo.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.btn_back.alpha = 0
+
+
 
 
 
@@ -297,8 +338,10 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
                 let vc = HomeViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
             }else{
-                print("you are trying to login with" + password)
-                print(error?.localizedDescription ?? "this is the error localized description")
+                
+                let alert = UIAlertController(title: "Oops!", message: error?.localizedDescription ?? "something went wrong", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         })
     }
@@ -312,7 +355,10 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             if error == nil {
                 self.authLogin(email: email, password: password)
             }else{
-                print(error?.localizedDescription ?? "this is the error localized description")
+                let alert = UIAlertController(title: "Oops!", message: error?.localizedDescription ?? "something went wrong", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+
             }
         })
         

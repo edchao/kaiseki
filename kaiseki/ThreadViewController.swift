@@ -27,6 +27,12 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var table_thread: UITableView! = UITableView()
     let screenSize: CGRect = UIScreen.main.bounds
+    
+    
+    // USER EDUCATION
+    
+    var halo: UIImageView!
+    
 
     // GRADIENT MASK
     
@@ -122,7 +128,6 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
         gradientMask.layer.insertSublayer(gradient, at: 0)
         self.view.addSubview(gradientMask)
 
-        
     
 
         // INITIALIZE TITLEVIEW
@@ -130,6 +135,18 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
         titleView = CarTitleView(frame: CGRect(x:0, y:-166, width:screenSize.width, height:166))
 //        titleView.titleLabel.text = self.navigationItem.title
         self.table_thread.addSubview(titleView)
+        
+        
+        // NUX
+        
+        halo = UIImageView(frame: CGRect(x: 0, y: 0, width: 320.0 , height: 320.0))
+        halo.image = UIImage(named: "halo")
+        halo.center.x = screenSize.width - 30
+        halo.center.y = 24
+        halo.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        halo.alpha = 0
+        self.navigationController?.navigationBar.addSubview(halo)
+
         
     }
 
@@ -161,10 +178,40 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             self.posts = newPosts.reversed()
             self.table_thread.reloadData()
+            self.checkNUX()
         }) { (error: Error) in
             print(error.localizedDescription)
         }
         
+    }
+    
+    
+    // NUX
+    
+    
+    func checkNUX(){
+        if posts.count == 0 {
+            animateHalo()
+        }else{
+            rescindHalo()
+        }
+    }
+    
+    // ANIMATE HALO
+    
+    func animateHalo(){
+        
+        UIView.animate(withDuration: 1.0, delay: 0.2, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+            self.halo.alpha = 1.0
+            self.halo.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, completion: nil)
+    }
+    func rescindHalo(){
+        
+        UIView.animate(withDuration: 1.0, delay: 0.2, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+            self.halo.alpha = 0
+            self.halo.transform = CGAffineTransform(scaleX: 0 , y: 0)
+        }, completion: nil)
     }
     
     
