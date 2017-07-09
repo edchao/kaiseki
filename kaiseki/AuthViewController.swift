@@ -17,10 +17,15 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     
     let screenSize: CGRect = UIScreen.main.bounds
     var logo: UIImageView!
+    var logo_placeholder : UIImageView!
     var logo_origin_y: CGFloat!
+    var logo_origin_x: CGFloat!
     var logo_dest_y: CGFloat!
+    var logo_dest_x: CGFloat!
     var hook: UILabel!
     var hook_origin_y: CGFloat!
+    var hook_dest_x: CGFloat!
+    var hook_origin_x: CGFloat!
     var hook_dest_y: CGFloat!
     var btn_back: UIButton!
     var btn_signup: UIButton!
@@ -34,6 +39,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     var card:UIView!
     var card_origin_y:CGFloat!
     var choice:String!
+    let stdPadding:CGFloat! = 20
 
     
     override func viewDidLoad() {
@@ -57,7 +63,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         card_origin_y = screenSize.height - 300/2 - 30
 
         
-        card = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width - 80, height: 300))
+        card = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width - stdPadding * 2, height: 300))
         card.center.y = card_origin_y
         card.center.x = screenSize.width / 2
         card.backgroundColor = UIColor.clear
@@ -67,26 +73,34 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(card)
 
         // SET LOGO 
-        
-        logo_origin_y = 180
+        logo_origin_x = 55
+        logo_origin_y = 80
         logo_dest_y = 43
-        logo = UIImageView(frame: CGRect(x: 40.0, y: 200.0, width: 61.0, height: 43.0))
+        logo_dest_x = 65
+        logo = UIImageView(frame: CGRect(x: screenSize.width + 50, y: 80, width: 61.0, height: 43.0))
+        logo.center.y = logo_origin_y
         logo.image = UIImage(named: "logo")
-        logo_origin_y = logo.center.y
-        logo.center.x = screenSize.width/2
         self.view.addSubview(logo)
+        
+        logo_placeholder = UIImageView(frame: CGRect(x: 40.0, y: 200.0, width: 61.0, height: 43.0))
+        logo_placeholder.image = UIImage(named: "logo")
+        logo_placeholder.center.x = screenSize.width/2
+        self.view.addSubview(logo_placeholder)
 
         
         // SET MARKETING HOOK LABEL
         
-        hook_origin_y = 120
-        hook_dest_y = -50
-        hook = UILabel(frame: CGRect(x: 40, y: 200, width: screenSize.width - 80, height: 144))
+        hook_origin_x = 150
+        hook_origin_y = 170
+        hook_dest_y = 100
+        hook_dest_x = 30
+        hook = UILabel(frame: CGRect(x: 60, y: 180, width: 250, height: 144))
         hook.center.y = hook_origin_y
         hook.text = "Keep notes on your car with Motornote"
         hook.textColor = UIColor.white
         hook.font = UIFont.boldSystemFont(ofSize: 30)
         hook.numberOfLines = 3
+        hook.alpha = 0
         self.view.addSubview(hook)
         
         
@@ -209,6 +223,30 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
 
     }
     
+    
+    
+    // INITIAL LOGO ANIMATION
+    
+    func animateIntro(){
+        UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+//            self.logo.center.y = self.logo_origin_y
+//            self.logo.center.x = self.logo_origin_x
+//            self.hook.center.y = self.hook_origin_y
+            self.logo_placeholder.center.x = -50
+            
+        }) { (Bool) in
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                self.logo.center.y = self.logo_origin_y
+                self.logo.center.x = self.logo_origin_x
+            }, completion: nil)
+            UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                self.hook.center.y = self.hook_origin_y
+                self.hook.center.x = self.hook_origin_x
+                self.hook.alpha = 1
+            }, completion: nil)
+        }
+    }
+    
 
     // KEYBOARD BEHAVIOR
     
@@ -237,6 +275,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             self.stroke_a.alpha = 1
             self.stroke_b.alpha = 1
             self.logo.center.y = self.logo_dest_y
+            self.logo.center.x = self.logo_dest_x
             self.logo.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             self.btn_back.alpha = 1
             self.hook.center.y = self.hook_dest_y
@@ -281,6 +320,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             self.btn_signup.alpha = 0
             self.btn_signup.isEnabled = false
             self.logo.center.y = self.logo_origin_y
+            self.logo.center.x = self.logo_origin_x
             self.logo.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.btn_back.alpha = 0
             self.hook.center.y = self.hook_origin_y
@@ -292,18 +332,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
 
         }, completion: nil)
     }
-    
-    // INITIAL LOGO ANIMATION
 
-    func animateIntro(){
-        UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
-            self.logo.center.y = self.logo_origin_y
-            self.logo.center.x = 75
-            self.hook.center.y = self.hook_origin_y
-        }) { (Bool) in
-            //
-        }
-    }
     
 
     // TEXTFIELD BEHAVIOR
