@@ -18,6 +18,10 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     let screenSize: CGRect = UIScreen.main.bounds
     var logo: UIImageView!
     var logo_origin_y: CGFloat!
+    var logo_dest_y: CGFloat!
+    var hook: UILabel!
+    var hook_origin_y: CGFloat!
+    var hook_dest_y: CGFloat!
     var btn_back: UIButton!
     var btn_signup: UIButton!
     var btn_login: UIButton!
@@ -53,7 +57,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         card_origin_y = screenSize.height - 300/2 - 30
 
         
-        card = UIView(frame: CGRect(x: 0, y: 0, width: 240, height: 300))
+        card = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width - 80, height: 300))
         card.center.y = card_origin_y
         card.center.x = screenSize.width / 2
         card.backgroundColor = UIColor.clear
@@ -64,12 +68,27 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
 
         // SET LOGO 
         
+        logo_origin_y = 180
+        logo_dest_y = 43
         logo = UIImageView(frame: CGRect(x: 40.0, y: 200.0, width: 61.0, height: 43.0))
         logo.image = UIImage(named: "logo")
         logo_origin_y = logo.center.y
         logo.center.x = screenSize.width/2
         self.view.addSubview(logo)
 
+        
+        // SET MARKETING HOOK LABEL
+        
+        hook_origin_y = 120
+        hook_dest_y = -50
+        hook = UILabel(frame: CGRect(x: 40, y: 200, width: screenSize.width - 80, height: 144))
+        hook.center.y = hook_origin_y
+        hook.text = "Keep notes on your car with Motornote"
+        hook.textColor = UIColor.white
+        hook.font = UIFont.boldSystemFont(ofSize: 30)
+        hook.numberOfLines = 3
+        self.view.addSubview(hook)
+        
         
         // SET TEXTFIELDS
                 
@@ -116,7 +135,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         // SET BUTTONS
     
         
-        btn_choose_signup = UIButton(frame: CGRect(x:0, y: 136, width: self.card.frame.width, height: 60))
+        btn_choose_signup = UIButton(frame: CGRect(x:0, y: 136, width: self.card.frame.width, height: 50))
         btn_choose_signup.backgroundColor = UIColor.white
         btn_choose_signup.setTitleColor(UIColor.ink(), for: UIControlState.normal)
         btn_choose_signup.layer.cornerRadius = 4
@@ -128,7 +147,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         self.card.addSubview(btn_choose_signup)
         
         
-        btn_choose_login = UIButton(frame: CGRect(x:0, y: 206, width: self.card.frame.width, height: 60))
+        btn_choose_login = UIButton(frame: CGRect(x:0, y: 206, width: self.card.frame.width, height: 50))
         btn_choose_login.backgroundColor = UIColor.coal()
         btn_choose_login.setTitleColor(UIColor.white, for: UIControlState.normal)
         btn_choose_login.layer.cornerRadius = 4
@@ -139,7 +158,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         self.card.addSubview(btn_choose_login)
         
         
-        btn_signup = UIButton(frame: CGRect(x:0, y: 136, width: self.card.frame.width, height: 60))
+        btn_signup = UIButton(frame: CGRect(x:0, y: 136, width: self.card.frame.width, height: 50))
         btn_signup.backgroundColor = UIColor.mint(1.0)
         btn_signup.setTitleColor(UIColor.white, for: UIControlState.normal)
         btn_signup.layer.cornerRadius = 4
@@ -151,9 +170,8 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         btn_signup.isEnabled = false
         self.card.addSubview(btn_signup)
         
-        
-        
-        btn_login = UIButton(frame: CGRect(x:0, y: 136, width: self.card.frame.width, height: 60))
+
+        btn_login = UIButton(frame: CGRect(x:0, y: 136, width: self.card.frame.width, height: 50))
         btn_login.backgroundColor = UIColor.mint(1.0)
         btn_login.setTitleColor(UIColor.white, for: UIControlState.normal)
         btn_login.layer.cornerRadius = 4
@@ -165,8 +183,6 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         btn_login.isEnabled = false
         self.card.addSubview(btn_login)
         
-        
-
         
         let backImage = UIImage(named: "btn-back")
         let btnBackImage = UIButton(type: .custom)
@@ -180,7 +196,9 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         btn_back.alpha = 0
 
 
-
+        // ANIMATE LOGO
+        
+        animateIntro()
         
         
         // KEYBOARD
@@ -218,9 +236,12 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             self.textfield_password.alpha = 1
             self.stroke_a.alpha = 1
             self.stroke_b.alpha = 1
-            self.logo.center.y = 43
+            self.logo.center.y = self.logo_dest_y
             self.logo.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             self.btn_back.alpha = 1
+            self.hook.center.y = self.hook_dest_y
+            self.hook.alpha = 0
+
 
 
             
@@ -262,6 +283,8 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             self.logo.center.y = self.logo_origin_y
             self.logo.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.btn_back.alpha = 0
+            self.hook.center.y = self.hook_origin_y
+            self.hook.alpha = 1
 
 
 
@@ -269,6 +292,19 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
 
         }, completion: nil)
     }
+    
+    // INITIAL LOGO ANIMATION
+
+    func animateIntro(){
+        UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+            self.logo.center.y = self.logo_origin_y
+            self.logo.center.x = 75
+            self.hook.center.y = self.hook_origin_y
+        }) { (Bool) in
+            //
+        }
+    }
+    
 
     // TEXTFIELD BEHAVIOR
     
