@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngs-7d-LBa">
-                    <rect key="frame" x="40" y="16" width="295" height="48"/>
+                    <rect key="frame" x="24" y="16" width="327" height="48"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -28,9 +28,9 @@
             </subviews>
             <constraints>
                 <constraint firstItem="ngs-7d-LBa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="E2r-iA-tM2"/>
-                <constraint firstItem="ngs-7d-LBa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="iDR-QS-W20"/>
+                <constraint firstItem="ngs-7d-LBa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="iDR-QS-W20"/>
                 <constraint firstAttribute="bottom" secondItem="ngs-7d-LBa" secondAttribute="bottom" constant="16" id="kVX-0I-0fj"/>
-                <constraint firstAttribute="trailing" secondItem="ngs-7d-LBa" secondAttribute="trailing" constant="40" id="xq1-eB-dXi"/>
+                <constraint firstAttribute="trailing" secondItem="ngs-7d-LBa" secondAttribute="trailing" constant="24" id="xq1-eB-dXi"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

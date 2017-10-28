@@ -62,7 +62,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         card = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 280))
         let card_origin_y = self.view.frame.height + 90
         card.center.y = card_origin_y
-        card.backgroundColor = UIColor.white
+        card.backgroundColor = UIColor.chalk()
         card.layer.shadowOffset = CGSize(width: 0, height: 0)
         card.layer.shadowOpacity = 0.0
         card.layer.shadowRadius = 10.0
@@ -71,18 +71,20 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         
         
         // BUTTONS
-        btn_cancel = UIButton(frame: CGRect(x:10, y: 20, width: 64, height: 60))
-        btn_cancel.backgroundColor = UIColor.clear
+        btn_cancel = UIButton(frame: CGRect(x:0, y: 30, width: self.view.frame.width/2, height: 64))
+        btn_cancel.center.y = card.frame.height - (64/2)
+        btn_cancel.backgroundColor = UIColor.grape()
         btn_cancel.setTitleColor(UIColor.white, for: UIControlState.normal)
-        btn_cancel.layer.cornerRadius = 4
+        btn_cancel.layer.cornerRadius = 0
         btn_cancel.layer.borderWidth = 0
         btn_cancel.alpha = 0
         btn_cancel.setTitle("Cancel", for: .normal)
         btn_cancel.addTarget(self, action: #selector(self.didTapCancel), for: .touchUpInside)
-        self.view.addSubview(btn_cancel)
+        card.addSubview(btn_cancel)
         
         
-        btn_save = UIButton(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 64))
+        
+        btn_save = UIButton(frame: CGRect(x: self.view.frame.width/2, y: 30, width: self.view.frame.width/2, height: 64))
         btn_save.center.y = card.frame.height - (64/2)
         btn_save.backgroundColor = UIColor.mint(1.0)
         btn_save.setTitleColor(UIColor.white, for: UIControlState.normal)

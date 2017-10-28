@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4p-Y9-5Rr">
-                    <rect key="frame" x="40" y="10" width="295" height="21"/>
+                    <rect key="frame" x="24" y="10" width="327" height="21"/>
                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
                     <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -29,8 +29,8 @@
             <constraints>
                 <constraint firstItem="p4p-Y9-5Rr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Ec7-Kf-MS4"/>
                 <constraint firstItem="p4p-Y9-5Rr" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="kTz-lq-M5x"/>
-                <constraint firstItem="p4p-Y9-5Rr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="rZd-Le-oJP"/>
-                <constraint firstAttribute="trailing" secondItem="p4p-Y9-5Rr" secondAttribute="trailing" constant="40" id="uzR-zC-ePz"/>
+                <constraint firstItem="p4p-Y9-5Rr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="rZd-Le-oJP"/>
+                <constraint firstAttribute="trailing" secondItem="p4p-Y9-5Rr" secondAttribute="trailing" constant="24" id="uzR-zC-ePz"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

@@ -15,14 +15,33 @@ extension UIColor {
         return UIColor(red: 32/255, green: 32/255, blue: 32/255, alpha: alpha)
     }
     class func coal(alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 44/255, green: 44/255, blue: 44/255, alpha: alpha)
+    }
+    class func graphite(alpha: CGFloat = 1.0) -> UIColor {
         return UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: alpha)
     }
     class func ash(alpha: CGFloat = 1.0) -> UIColor {
         return UIColor(red: 177/255, green: 177/255, blue: 177/255, alpha: alpha)
     }
+    class func cherry(_ alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 205/255, green: 0/255, blue: 0/255, alpha: alpha)
+    }
     class func mint(_ alpha: CGFloat = 1.0) -> UIColor {
         return UIColor(red: 76/255, green: 198/255, blue: 147/255, alpha: alpha)
     }
+    class func forest(_ alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 0/255, green: 138/255, blue: 59/255, alpha: alpha)
+    }
+    class func chalk(_ alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 243/255, green: 243/255, blue: 243/255, alpha: alpha)
+    }
+    class func grape(_ alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 101/255, green: 91/255, blue: 200/255, alpha: alpha)
+    }
+    class func blueberry(_ alpha: CGFloat = 1.0) -> UIColor {
+        return UIColor(red: 11/255, green: 83/255, blue: 167/255, alpha: alpha)
+    }
+    
 }
 
 extension UIColor {
@@ -39,7 +58,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     // VARS
     
     let screenSize: CGRect = UIScreen.main.bounds
-    
+    let stdPadding: CGFloat = 24.0
     
     
     // TITLE and SECTION LABEL
@@ -88,6 +107,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         // SET VIEW COLOR
         
         self.view.backgroundColor = UIColor.ink(alpha: 1.0)
+        self.navigationController?.navigationBar.backgroundColor = UIColor.ink(alpha: 0)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true        
@@ -100,7 +120,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         carousel = iCarousel(frame: CGRect(x:0, y:290, width:screenSize.width, height:240))
         carousel.dataSource = self as iCarouselDataSource
         carousel.delegate = self as iCarouselDelegate
-        carousel.contentOffset = CGSize(width: -1 * (screenSize.width/2 - (180/2) - 40
+        carousel.contentOffset = CGSize(width: -1 * (screenSize.width/2 - (180/2) - stdPadding
 ), height: 0)
         
         
@@ -278,6 +298,23 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         tempView.addSubview(button)
         tempView.metaLabel.text = thread.secondaryContent + " " + thread.tertiaryContent.uppercased()
         tempView.titleLabel.text = thread.primaryContent
+        
+        // SET COLOR
+        if (thread.quaternaryContent == "black"){
+            tempView.backgroundColor = UIColor.coal()
+        }else if(thread.quaternaryContent == "gray"){
+            tempView.backgroundColor = UIColor.graphite()
+        }else if(thread.quaternaryContent == "white"){
+            tempView.backgroundColor = UIColor.chalk()
+            tempView.titleLabel.textColor = UIColor.ink()
+            tempView.metaLabel.textColor = UIColor.ink()
+        }else if(thread.quaternaryContent == "red"){
+            tempView.backgroundColor = UIColor.cherry()
+        }else if(thread.quaternaryContent == "blue"){
+            tempView.backgroundColor = UIColor.blueberry()
+        }else if(thread.quaternaryContent == "green"){
+            tempView.backgroundColor = UIColor.forest()
+        }
 
         return tempView
     }

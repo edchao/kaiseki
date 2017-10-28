@@ -17,17 +17,19 @@ struct Thread {
     let primaryContent:String!
     let secondaryContent: String!
     let tertiaryContent: String!
+    let quaternaryContent: String!
     let addedByUser:String!
     let itemRef:FIRDatabaseReference?
     
     
     // INITIALIZE THREAD WITH ARBITRARY DATA
     
-    init(primaryContent:String, secondaryContent: String, tertiaryContent: String, addedByUser:String, key:String = ""){
+    init(primaryContent:String, secondaryContent: String, tertiaryContent: String, quaternaryContent:String, addedByUser:String, key:String = ""){
         self.key = key
         self.primaryContent = primaryContent
         self.secondaryContent = secondaryContent
         self.tertiaryContent = tertiaryContent
+        self.quaternaryContent = quaternaryContent
         self.addedByUser = addedByUser
         self.itemRef = nil
     }
@@ -70,6 +72,12 @@ struct Thread {
             tertiaryContent = ""
         }
         
+        if let threadDict = snapshot.value as? NSDictionary, let threadQuaternaryContent = threadDict["quaternaryContent"] as? String {
+            quaternaryContent = threadQuaternaryContent
+        }else{
+            quaternaryContent = ""
+        }
+        
         if let userDict = snapshot.value as? NSDictionary, let threadUser = userDict["addedByUser"] as? String {
             addedByUser = threadUser
         }else {
@@ -80,6 +88,6 @@ struct Thread {
     // RETURN THE DICTIONARY
     
     func toAny() -> Any {
-        return ["primaryContent":primaryContent, "secondaryContent":secondaryContent, "tertiaryContent":tertiaryContent, "addedByUser":addedByUser]
+        return ["primaryContent":primaryContent, "secondaryContent":secondaryContent, "tertiaryContent":tertiaryContent, "quaternaryContent":quaternaryContent, "addedByUser":addedByUser]
     }
 }

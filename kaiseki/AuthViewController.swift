@@ -53,6 +53,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         // SET VIEW COLOR
         
         self.view.backgroundColor = UIColor.ink(alpha: 1.0)
+        self.navigationController?.navigationBar.backgroundColor = UIColor.ink(alpha: 0)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -110,7 +111,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         textfield_email.backgroundColor = UIColor.clear
         textfield_email.textColor = UIColor.white
         textfield_email.placeholder = "Email"
-        textfield_email.attributedPlaceholder = NSAttributedString(string: textfield_email.placeholder!, attributes: [NSForegroundColorAttributeName : UIColor.coal()])
+        textfield_email.attributedPlaceholder = NSAttributedString(string: textfield_email.placeholder!, attributes: [NSForegroundColorAttributeName : UIColor.graphite()])
         textfield_email.delegate = self
         textfield_email.font = .systemFont(ofSize: 16)
         textfield_email.addTarget(self, action: #selector(self.textFieldEmailDidChange), for: UIControlEvents.editingChanged)
@@ -123,7 +124,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         textfield_password = UITextField(frame: CGRect(x: 0, y: 58, width: self.card.frame.width - 20, height: 48))
         textfield_password.backgroundColor = UIColor.clear
         textfield_password.placeholder = "Password"
-        textfield_password.attributedPlaceholder = NSAttributedString(string: textfield_password.placeholder!, attributes: [NSForegroundColorAttributeName : UIColor.coal()])
+        textfield_password.attributedPlaceholder = NSAttributedString(string: textfield_password.placeholder!, attributes: [NSForegroundColorAttributeName : UIColor.graphite()])
         textfield_password.textColor = UIColor.white
         textfield_password.delegate = self
         textfield_password.font = .systemFont(ofSize: 16)
@@ -228,18 +229,15 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     // INITIAL LOGO ANIMATION
     
     func animateIntro(){
-        UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
-//            self.logo.center.y = self.logo_origin_y
-//            self.logo.center.x = self.logo_origin_x
-//            self.hook.center.y = self.hook_origin_y
+        UIView.animate(withDuration: 0.5, delay: 0.25, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
             self.logo_placeholder.center.x = -50
             
         }) { (Bool) in
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
                 self.logo.center.y = self.logo_origin_y
                 self.logo.center.x = self.logo_origin_x
             }, completion: nil)
-            UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0.2, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
                 self.hook.center.y = self.hook_origin_y
                 self.hook.center.x = self.hook_origin_x
                 self.hook.alpha = 1

@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1B-mM-jQz">
-                    <rect key="frame" x="40" y="40" width="295" height="20"/>
+                    <rect key="frame" x="24" y="40" width="327" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="kV3-4o-Q1P"/>
                     </constraints>
@@ -30,7 +30,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaU-v1-JqV">
-                    <rect key="frame" x="40" y="76" width="295" height="50"/>
+                    <rect key="frame" x="24" y="76" width="327" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="rfQ-UA-aOf"/>
                     </constraints>
@@ -40,13 +40,13 @@
                 </label>
             </subviews>
             <constraints>
-                <constraint firstItem="V1B-mM-jQz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="E2w-L9-Qr3"/>
-                <constraint firstItem="BaU-v1-JqV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="ax6-Pg-7fn"/>
+                <constraint firstItem="V1B-mM-jQz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="E2w-L9-Qr3"/>
+                <constraint firstItem="BaU-v1-JqV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="ax6-Pg-7fn"/>
                 <constraint firstItem="BaU-v1-JqV" firstAttribute="top" secondItem="V1B-mM-jQz" secondAttribute="bottom" constant="16" id="fEA-g9-TRV"/>
                 <constraint firstAttribute="bottom" secondItem="BaU-v1-JqV" secondAttribute="bottom" constant="40" id="gJv-qg-o35"/>
                 <constraint firstItem="V1B-mM-jQz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="40" id="m1H-vV-Kg4"/>
-                <constraint firstAttribute="trailing" secondItem="BaU-v1-JqV" secondAttribute="trailing" constant="40" id="scS-qx-TPX"/>
-                <constraint firstAttribute="trailing" secondItem="V1B-mM-jQz" secondAttribute="trailing" constant="40" id="sfL-sX-Slr"/>
+                <constraint firstAttribute="trailing" secondItem="BaU-v1-JqV" secondAttribute="trailing" constant="24" id="scS-qx-TPX"/>
+                <constraint firstAttribute="trailing" secondItem="V1B-mM-jQz" secondAttribute="trailing" constant="24" id="sfL-sX-Slr"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
