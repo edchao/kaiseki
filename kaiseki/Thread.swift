@@ -19,7 +19,7 @@ struct Thread {
     let tertiaryContent: String!
     let quaternaryContent: String!
     let addedByUser:String!
-    let itemRef:FIRDatabaseReference?
+    let itemRef:DatabaseReference?
     
     
     // INITIALIZE THREAD WITH ARBITRARY DATA
@@ -38,7 +38,7 @@ struct Thread {
     // ---
     // Firebase data is packaged in a snapshot
     
-    init(snapshot:FIRDataSnapshot){
+    init(snapshot:DataSnapshot){
         key = snapshot.key
         itemRef = snapshot.ref
         

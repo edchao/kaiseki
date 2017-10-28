@@ -395,7 +395,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     // AUTH LOGIN FUNCTION
     
     func authLogin(email: String, password: String){
-        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user:FIRUser?, error:Error?) in
+        Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
             if error == nil {
                 print(user?.email ?? "This is the user email")
                 let vc = HomeViewController()
@@ -414,7 +414,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     func authSignup(email: String, password: String){
 
         
-        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user:FIRUser?, error:Error?) in
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if error == nil {
                 self.authLogin(email: email, password: password)
             }else{
@@ -423,7 +423,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
                 self.present(alert, animated: true, completion: nil)
 
             }
-        })
+        }
         
     }
     

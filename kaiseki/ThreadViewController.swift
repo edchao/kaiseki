@@ -44,7 +44,7 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // FIREBASE DECLARATIONS
     
-    var postsRef:FIRDatabaseReference!
+    var postsRef:DatabaseReference!
     var posts = [Post]()
     
     // PASSED DATA FROM HOME
@@ -60,7 +60,7 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // SET FIREBASE DATA REF
         
-        postsRef = FIRDatabase.database().reference().child("post-items")
+        postsRef = Database.database().reference().child("post-items")
         startObservingDB()
         
 
@@ -168,11 +168,11 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func startObservingDB() {
         
-        postsRef.queryOrdered(byChild: "addedToThread").queryStarting(atValue: threadKey).queryEnding(atValue: threadKey).observe(FIRDataEventType.value, with: { (snapshot: FIRDataSnapshot) in
+        postsRef.queryOrdered(byChild: "addedToThread").queryStarting(atValue: threadKey).queryEnding(atValue: threadKey).observe(DataEventType.value, with: { (snapshot: DataSnapshot) in
             var newPosts = [Post]()
             
             for post in snapshot.children {
-                let postObject = Post(snapshot: post as! FIRDataSnapshot)
+                let postObject = Post(snapshot: post as! DataSnapshot)
                 newPosts.append(postObject)
             }
             

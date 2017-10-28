@@ -29,7 +29,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
     
     // FIREBASE DECLARATIONS
     
-    var threadsRef: FIRDatabaseReference!
+    var threadsRef: DatabaseReference!
     var threads = [Thread]()
     
     
@@ -64,7 +64,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         
         // SET FIREBASE DATA REF
         
-        threadsRef = FIRDatabase.database().reference().child("thread-items")
+        threadsRef = Database.database().reference().child("thread-items")
         
         
         // OVERLAY
@@ -406,7 +406,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
         self.textField_c.endEditing(true)
         
         if let threadPrimaryContent = textField_c.text, let threadSecondaryContent = textField_a.text, let threadTertiaryContent = textField_b.text, let quaternaryContent = self.colorPick {
-            let thread = Thread(primaryContent: threadPrimaryContent, secondaryContent: threadSecondaryContent, tertiaryContent: threadTertiaryContent, quaternaryContent: quaternaryContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!)
+            let thread = Thread(primaryContent: threadPrimaryContent, secondaryContent: threadSecondaryContent, tertiaryContent: threadTertiaryContent, quaternaryContent: quaternaryContent, addedByUser: (Auth.auth().currentUser?.email)!)
             let threadRef = self.threadsRef.childByAutoId()
             threadRef.setValue(thread.toAny())
         }

@@ -14,7 +14,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
 
     // FIREBASE DECLARATIONS
     
-    var postsRef:FIRDatabaseReference!
+    var postsRef:DatabaseReference!
     var posts = [Post]()
     
     // PASSED DATA FROM HOME
@@ -46,7 +46,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         
         // SET FIREBASE DATA REF
         
-        postsRef = FIRDatabase.database().reference().child("post-items")
+        postsRef = Database.database().reference().child("post-items")
         
         
         // OVERLAY
@@ -276,7 +276,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
             let postRef = self.postsRef.childByAutoId()
             
             // CREATE THE POST WITH ALL THE THINGS NEEDED
-            let post = Post(mileage: postPrimaryContent, timestamp: FIRServerValue.timestamp(), content: postSecondaryContent, addedByUser: (FIRAuth.auth()?.currentUser?.email)!, addedToThread:self.threadKey as String)
+            let post = Post(mileage: postPrimaryContent, timestamp: ServerValue.timestamp(), content: postSecondaryContent, addedByUser: (Auth.auth().currentUser?.email)!, addedToThread:self.threadKey as String)
             
             // CONVERT THE POST TO DICTIONARY
             postRef.setValue(post.toAny())

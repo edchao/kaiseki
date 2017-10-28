@@ -26,11 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // FIREBASE
         
-        FIRApp.configure()
+        FirebaseApp.configure()
         
         
         
-        if FIRAuth.auth()?.currentUser != nil {
+        if Auth.auth().currentUser != nil {
             navC = UINavigationController()
             homeVC = HomeViewController()
             navC!.pushViewController(homeVC!, animated: false)

@@ -74,10 +74,10 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     
     // FIREBASE DECLARATIONS
     
-    var threadsRef: FIRDatabaseReference!
+    var threadsRef: DatabaseReference!
     var threads = [Thread]()
     var user: User!
-    let usersRef = FIRDatabase.database().reference(withPath: "online")
+    let usersRef = Database.database().reference(withPath: "online")
 
     
     
@@ -100,7 +100,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         // SET FIREBASE DATA REF
         
-        threadsRef = FIRDatabase.database().reference().child("thread-items")
+        threadsRef = Database.database().reference().child("thread-items")
         startObservingDB()
         
         
@@ -173,14 +173,14 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         
         // CHECK IF USER STATE HAS CHANGED or LOGGED OUT
         
-        FIRAuth.auth()!.addStateDidChangeListener { auth, user in
-            if let _user = user {
-                self.user = User(userData: _user)
-            } else {
-                let userRef = self.usersRef.child(self.user.uid)
-                userRef.removeValue()
-            }
-        }
+//        Auth.auth().addStateDidChangeListener { auth, user in
+//            if let _user = user {
+//                self.user = User(uid: String, email: <#T##String#>)
+//            } else {
+//                let userRef = self.usersRef.child(self.user.uid)
+//                userRef.removeValue()
+//            }
+//        }
         
     
     }
@@ -226,11 +226,11 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     func startObservingDB() {
     
         
-        threadsRef.queryOrdered(byChild: "addedByUser").queryStarting(atValue: FIRAuth.auth()?.currentUser?.email).queryEnding(atValue: FIRAuth.auth()?.currentUser?.email).observe(FIRDataEventType.value, with: { (snapshot: FIRDataSnapshot) in
+        threadsRef.queryOrdered(byChild: "addedByUser").queryStarting(atValue: Auth.auth().currentUser?.email).queryEnding(atValue: Auth.auth().currentUser?.email).observe(DataEventType.value, with: { (snapshot: DataSnapshot) in
             var newThreads = [Thread]()
             
             for thread in snapshot.children {
-                let threadObject = Thread(snapshot: thread as! FIRDataSnapshot)
+                let threadObject = Thread(snapshot: thread as! DataSnapshot)
                 newThreads.append(threadObject)
             }
             
@@ -253,7 +253,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
         do {
             let userRef = self.usersRef.child(self.user.uid)
             userRef.removeValue()
-            try FIRAuth.auth()?.signOut()
+            try Auth.auth().signOut()
             self.navigationController?.popToRootViewController(animated: true)
         } catch let error as NSError {
             print(error.localizedDescription)

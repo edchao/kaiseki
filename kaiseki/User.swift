@@ -14,14 +14,14 @@ struct User {
     // MODEL ATTRIBUTES
     
     let uid:String
-    let email:String
+    let email:String?
     
     // INITIALIZING USER WITH FIREBASE DATA
     
-    init(userData:FIRUser){
+    init(userData:User){
         uid = userData.uid
         
-        if let mail = userData.providerData.first?.email{
+        if let mail = userData.email{
             email = mail
         }else {
             email = ""

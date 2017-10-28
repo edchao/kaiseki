@@ -21,7 +21,7 @@ struct Post {
     let content:String!
     let addedByUser:String!
     let addedToThread:String!
-    let itemRef:FIRDatabaseReference?
+    let itemRef:DatabaseReference?
     
     
     // INITIALIZE POST WITH ARBITRARY DATA
@@ -40,7 +40,7 @@ struct Post {
     // ---
     // Firebase data is packaged in a snapshot
     
-    init(snapshot:FIRDataSnapshot){
+    init(snapshot:DataSnapshot){
         key = snapshot.key
         itemRef = snapshot.ref
         addedToThread = ""
