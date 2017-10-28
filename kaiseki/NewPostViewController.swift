@@ -163,7 +163,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     // KEYBOARD BEHAVIOR
     
-    func keyboardWillShow(notification: NSNotification!) {
+    @objc func keyboardWillShow(notification: NSNotification!) {
         var userInfo = notification.userInfo!
         let kbSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size
         let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber
@@ -180,7 +180,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     }
     
     
-    func keyboardWillHide(notification: NSNotification!) {
+    @objc func keyboardWillHide(notification: NSNotification!) {
         var userInfo = notification.userInfo!
         let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber
         let animationDuration = durationValue.doubleValue
@@ -210,7 +210,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     }
     
     
-    func textFieldDidChange(_ textField: UITextField) {
+    @objc func textFieldDidChange(_ textField: UITextField) {
         checkInput()
     }
     
@@ -245,7 +245,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     // BUTTON ACTIONS
     
-    func didTapCancel(sender:UIButton){
+    @objc func didTapCancel(sender:UIButton){
         self.textField_a.endEditing(true)
         self.textField_b.endEditing(true)
         
@@ -266,7 +266,7 @@ class NewPostViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     }
     
     
-    func didTapSave(sender:UIButton){
+    @objc func didTapSave(sender:UIButton){
         self.textField_a.endEditing(true)
         self.textField_b.endEditing(true)
         

@@ -111,7 +111,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         textfield_email.backgroundColor = UIColor.clear
         textfield_email.textColor = UIColor.white
         textfield_email.placeholder = "Email"
-        textfield_email.attributedPlaceholder = NSAttributedString(string: textfield_email.placeholder!, attributes: [NSForegroundColorAttributeName : UIColor.graphite()])
+        textfield_email.attributedPlaceholder = NSAttributedString(string: textfield_email.placeholder!, attributes: [NSAttributedStringKey.foregroundColor : UIColor.graphite()])
         textfield_email.delegate = self
         textfield_email.font = .systemFont(ofSize: 16)
         textfield_email.addTarget(self, action: #selector(self.textFieldEmailDidChange), for: UIControlEvents.editingChanged)
@@ -124,7 +124,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         textfield_password = UITextField(frame: CGRect(x: 0, y: 58, width: self.card.frame.width - 20, height: 48))
         textfield_password.backgroundColor = UIColor.clear
         textfield_password.placeholder = "Password"
-        textfield_password.attributedPlaceholder = NSAttributedString(string: textfield_password.placeholder!, attributes: [NSForegroundColorAttributeName : UIColor.graphite()])
+        textfield_password.attributedPlaceholder = NSAttributedString(string: textfield_password.placeholder!, attributes: [NSAttributedStringKey.foregroundColor : UIColor.graphite()])
         textfield_password.textColor = UIColor.white
         textfield_password.delegate = self
         textfield_password.font = .systemFont(ofSize: 16)
@@ -248,13 +248,13 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
 
     // KEYBOARD BEHAVIOR
     
-    func dismissKeyboard(sender:UIButton){
+    @objc func dismissKeyboard(sender:UIButton){
         self.textfield_email.resignFirstResponder()
         self.textfield_password.resignFirstResponder()
 
     }
     
-    func keyboardWillShow(notification: NSNotification!) {
+    @objc func keyboardWillShow(notification: NSNotification!) {
         var userInfo = notification.userInfo!
         let kbSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size
         let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber
@@ -296,7 +296,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func keyboardWillHide(notification: NSNotification!) {
+    @objc func keyboardWillHide(notification: NSNotification!) {
         var userInfo = notification.userInfo!
         let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber
         let animationDuration = durationValue.doubleValue
@@ -335,12 +335,12 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
 
     // TEXTFIELD BEHAVIOR
     
-    func textFieldEmailDidChange(_ textField: UITextField) {
+    @objc func textFieldEmailDidChange(_ textField: UITextField) {
         checkInput()
         
         
     }
-    func textFieldPWDidChange(_ textField: UITextField) {
+    @objc func textFieldPWDidChange(_ textField: UITextField) {
         checkInput()
         
         
@@ -364,7 +364,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     // BUTTON FUNCTIONS
     
     
-    func didTapChooseLogin (sender: UIButton){
+    @objc func didTapChooseLogin (sender: UIButton){
         
         self.choice = "login"
         self.textfield_email.isEnabled = true
@@ -374,7 +374,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     
     }
     
-    func didTapChooseSignup (sender: UIButton){
+    @objc func didTapChooseSignup (sender: UIButton){
         self.choice = "signup"
         self.textfield_email.isEnabled = true
         self.textfield_password.isEnabled = true
@@ -382,12 +382,12 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func didTapSignup (sender: UIButton){
+    @objc func didTapSignup (sender: UIButton){
         authSignup(email: self.textfield_email.text!, password: self.textfield_password.text!)
     }
     
     
-    func didTapLogin (sender: UIButton){
+    @objc func didTapLogin (sender: UIButton){
         authLogin(email: self.textfield_email.text!, password: self.textfield_password.text!)
     }
     

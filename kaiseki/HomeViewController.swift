@@ -249,7 +249,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     // LOGOUT BUTTON
     
     
-    func logout(_ sender: AnyObject) {
+    @objc func logout(_ sender: AnyObject) {
         do {
             let userRef = self.usersRef.child(self.user.uid)
             userRef.removeValue()
@@ -264,7 +264,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     
     // THREAD BUTTON
     
-    func newThread(sender: AnyObject){
+    @objc func newThread(sender: AnyObject){
         let newThreadVC: NewThreadViewController = NewThreadViewController(nibName: nil, bundle: nil)
         self.definesPresentationContext = true
         newThreadVC.modalPresentationStyle = UIModalPresentationStyle.custom
@@ -332,7 +332,7 @@ class HomeViewController: UIViewController, iCarouselDelegate, iCarouselDataSour
     
     // CAROUSEL TRAVERSAL
     
-    func goToThread(sender:UIButton!)
+    @objc func goToThread(sender:UIButton!)
     {
         print("Thread tapped")
         

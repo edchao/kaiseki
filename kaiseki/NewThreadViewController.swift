@@ -243,7 +243,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
     
     // COLOR PICK
     
-    func didTapColor(sender:UIButton){
+    @objc func didTapColor(sender:UIButton){
         clearAllColors()
         markColor(btn: sender)
         
@@ -302,7 +302,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
     
     // KEYBOARD BEHAVIOR
     
-    func keyboardWillShow(notification: NSNotification!) {
+    @objc func keyboardWillShow(notification: NSNotification!) {
         var userInfo = notification.userInfo!
         let kbSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size
         let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber
@@ -319,7 +319,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
     }
 
     
-    func keyboardWillHide(notification: NSNotification!) {
+    @objc func keyboardWillHide(notification: NSNotification!) {
         var userInfo = notification.userInfo!
         let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber
         let animationDuration = durationValue.doubleValue
@@ -336,13 +336,13 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
     
     // TEXTFIELD BEHAVIOR
     
-    func textFieldADidChange(_ textField: UITextField) {
+    @objc func textFieldADidChange(_ textField: UITextField) {
         checkInput()
     }
-    func textFieldBDidChange(_ textField: UITextField) {
+    @objc func textFieldBDidChange(_ textField: UITextField) {
         checkInput()
     }
-    func textFieldCDidChange(_ textField: UITextField) {
+    @objc func textFieldCDidChange(_ textField: UITextField) {
         checkInput()
     }
     
@@ -378,7 +378,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
     
     // BUTTON ACTIONS
     
-    func didTapCancel(sender:UIButton){
+    @objc func didTapCancel(sender:UIButton){
         self.textField_a.endEditing(true)
         self.textField_b.endEditing(true)
         self.textField_c.endEditing(true)
@@ -400,7 +400,7 @@ class NewThreadViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func didTapSave(sender:UIButton){
+    @objc func didTapSave(sender:UIButton){
         self.textField_a.endEditing(true)
         self.textField_b.endEditing(true)
         self.textField_c.endEditing(true)

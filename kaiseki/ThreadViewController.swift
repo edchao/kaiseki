@@ -218,7 +218,7 @@ class ThreadViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // POST BUTTON
     
-    func newPost(sender: AnyObject){
+    @objc func newPost(sender: AnyObject){
         let newPostVC: NewPostViewController = NewPostViewController(nibName: nil, bundle: nil)
         self.definesPresentationContext = true
         newPostVC.modalPresentationStyle = UIModalPresentationStyle.custom
